@@ -14,17 +14,17 @@
         $i=1;
 
         foreach($data->result_array() as $row ) {
-        echo $i;
-        echo $separator.$row['kategori'];
-        echo $separator.$row['namakawasan'];
-        echo $separator.tanggal($row['waktu']);
-        echo $separator.$row['kegiatan'];
-        echo $separator.$row['lintang'];
-        echo $separator.$row['bujur'];
-        echo $separator.$row['keterangan'];
-        echo $separator.$row['validasi'];
-        echo "\r\n";
-        $i++;
+            echo $i;
+            echo $separator.$row['kategori'];
+            echo $separator.$row['namakawasan'];
+            echo $separator.tanggal($row['waktu']);
+            echo $separator.$row['kegiatan'];
+            echo $separator.$row['lintang'];
+            echo $separator.$row['bujur'];
+            echo  $separator . str_replace(array("\r", "\n"), '', $row['keterangan']) ;
+            echo $separator.$row['validasi'];
+            echo "\r\n";
+            $i++;
         }
 
     } else if ($kategori=="PAL Batas Wilayah"){
@@ -206,11 +206,3 @@
         }
 
     }
-
-?>
-
-
-
-         
-         
-         

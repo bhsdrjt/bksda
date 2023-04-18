@@ -88,8 +88,8 @@
 					<div class="col-lg-6">
                         <select class="form-control" name="data1" id="data1" >
                             <option value="" disabled selected>.:Pilih Kelas:.</option>
-							<option value="Perambahan / Ilegal Logging" >Perambahan / Ilegal Logging</option>
-							<option value="Pembukaan Lahan" >Pembukaan Lahan</option>
+							<option value="Ilegal Logging" >Ilegal Logging</option>
+							<!-- <option value="Pembukaan Lahan" >Pembukaan Lahan</option> -->
 							<option value="Perburuan" >Perburuan</option>
 							<option value="Lainnya" >Lainnya</option>
 						</select>
