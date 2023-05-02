@@ -4,15 +4,15 @@
             <i class="fa fa-home"></i>App</a>
     </li>
     <li>
-        <a href="<?php echo base_url() ?>app/penangkar">
+        <a href="<?php echo base_url() ?>app/pengedar">
             <i class="fa fa-pow"></i>Pendataan Penangkar</a>
     </li>
     <li class="active">
-        <strong>Tambah Penangkar</strong>
+        <strong>Tambah Pengedar</strong>
     </li>
 </ol>
 
-<h3>Tambah Satwa </h3>
+<h3>Tambah Pengedar </h3>
 <div class="panel panel-primary" data-collapsed="0">
 
     <div class="panel-heading">
@@ -27,7 +27,7 @@
 
     <div class="panel-body">
         <?php pesan_get('msg', "Berhasil Menambahkan Satwa", "Gagal Menambahkan Satwa") ?>
-        <form role="form" class="form-horizontal validate" action="<?php echo base_url() ?>app/penangkartambah" method="post" enctype="multipart/form-data" id="form">
+        <form role="form" class="form-horizontal validate" action="<?php echo base_url() ?>app/pengedartambah" method="post" enctype="multipart/form-data" id="form">
             <div class="row">
                 <div class="col-md-6">
                     <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>">
@@ -35,6 +35,12 @@
                         <label class="col-lg-4 control-label">Nomor SK *</label>
                         <div class="col-lg-8">
                             <input type="text" class="form-control" id="nosk" name="nosk">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Tentang SK *</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="tentang_sk" name="tentang_sk">
                         </div>
                     </div>
                     <div class="form-group">
@@ -70,32 +76,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">Jenis*</label>
+                        <label class="col-lg-4 control-label">Jenis Komoditi*</label>
                         <div class="col-lg-8">
-                            <select class="form-control" name="jenis" id="jenis">
-                                <option value="" disabled selected>.:Pilih Jenis:.</option>
-                                <option value="Mamalia">Mamalia</option>
-                                <option value="Burung/Aves">Burung/Aves</option>
-                                <option value="Amfibi">Amfibi</option>
-                                <option value="Reptil">Reptil</option>
-                                <option value="Ikan">Ikan</option>
-                            </select>
+                            <input type="text" class="form-control" id="jenis_komoditi" name="jenis_komoditi">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-4 control-label">Asal Usul*</label>
-                        <div class="col-lg-8">
-                            <input type="text" class="form-control" id="asal_usul" name="asal_usul">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-lg-4 control-label">Jumlah FO*</label>
-                        <div class="col-lg-8">
-                            <input type="text" class="form-control" id="jumlah" name="jumlah">
-                        </div>
-                    </div>
-
+                    
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -129,7 +115,7 @@
         <button type="submit" class="btn btn-primary btn-s-xs   btn-icon icon-left">
             <i class="fa fa-save"></i> Simpan</button>
         &nbsp
-        <a href="<?php echo base_url('app/penangkar') ?>" class="btn btn-default btn-s-xs   btn-icon icon-left">
+        <a href="<?php echo base_url('app/pengedar') ?>" class="btn btn-default btn-s-xs   btn-icon icon-left">
             <i class="fa fa-times"></i> Kembali</a>
 
         </form>

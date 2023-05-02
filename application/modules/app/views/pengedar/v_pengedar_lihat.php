@@ -4,20 +4,20 @@
             <i class="fa fa-satwas"></i>App</a>
     </li>
     <li>
-        <a href="<?php echo base_url() ?>app/penangkar">
-            <i class="fa fa-satwa"></i>Penangkar</a>
+        <a href="<?php echo base_url() ?>app/pengedar">
+            <i class="fa fa-satwa"></i>Pengedar</a>
     </li>
     <li class="active">
-        <strong>Tambah Penangkar</strong>
+        <strong>Tambah Pengedar</strong>
     </li>
 </ol>
 
-<h3>Lihat Data Penangkar </h3>
+<h3>Lihat Data Pengedar </h3>
 <div class="panel panel-primary" data-collapsed="0">
 
     <div class="panel-heading">
         <div class="panel-title">
-            Edit Penangkar
+            Edit Pengedar
         </div>
 
         <div class="panel-options">
@@ -26,11 +26,11 @@
     </div>
 
     <div class="panel-body">
-        <a href="<?php echo base_url('app/penangkar') ?>" class="btn btn-primary btn-s-xs">
+        <a href="<?php echo base_url('app/pengedar') ?>" class="btn btn-primary btn-s-xs">
             <i class="fa fa-arrow-left"></i> Kembali</a>
 
         <hr />
-        <form role="form" class="form-horizontal validate" action="<?php echo base_url() ?>app/penangkaredit" method="post" enctype="multipart/form-data" id="form">
+        <form role="form" class="form-horizontal validate" action="<?php echo base_url() ?>app/pengedaredit" method="post" enctype="multipart/form-data" id="form">
             <div class="row">
                 <div class="col-md-6">
                     <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>">
@@ -39,6 +39,12 @@
                         <label class="col-lg-4 control-label">Nomor SK *</label>
                         <div class="col-lg-8">
                             <p class="form-control-static"> : <?php echo $data['nosk'] ?> </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Tentang SK *</label>
+                        <div class="col-lg-8">
+                            <p class="form-control-static"> : <?php echo $data['tentang_sk'] ?></p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -57,27 +63,15 @@
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Jenis*</label>
                         <div class="col-lg-8">
-                            <p class="form-control-static" style="font-weight:bold; font-style:italic;"> :<?php echo $data['jenis'] ?> </p>
+                            <p class="form-control-static" style="font-weight:bold; font-style:italic;"> :<?php echo $data['jenis_komoditi'] ?> </p>
 
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-lg-4 control-label">Jumlah*</label>
-                        <div class="col-lg-8">
-                            <p class="form-control-static"> : <?php echo $data['jumlah_fo'] ?></p>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Masa Berlaku</label>
                         <div class="col-lg-8">
                             <p class="form-control-static"> <b><?php echo tgl_indo($data['tglawal_berlaku']) ?></b> - <b><?php echo tgl_indo($data['tglakhir_berlaku']) ?></b></p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-4 control-label">Asal Usul</label>
-                        <div class="col-lg-8">
-                            <p class="form-control-static"> : <?php echo $data['asal_usul'] ?></p>
                         </div>
                     </div>
                 </div>
@@ -86,11 +80,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Foto</label>
                         <div class="col-sm-8">
-
-
-                            <img src="<?php echo base_url() . "assets/images/satwa/" . $data['foto'] ?>" class="thumbnail" style="max-width: 300px; height: 200px;" alt="...">
-
-
+                            <img src="<?php echo base_url() . "assets/images/pengedar/" . $data['foto'] ?>" class="thumbnail" style="max-width: 300px; height: 200px;" alt="...">
 
                         </div>
                     </div>

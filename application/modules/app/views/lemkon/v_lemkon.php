@@ -4,24 +4,23 @@
             <i class="fa fa-file"></i>App</a>
     </li>
     <li class="active">
-        <strong>Data Pengedar</strong>
+        <strong>Data Lembaga konservasi</strong>
     </li>
 </ol>
 
-<h3>Data Pengedar</h3>
+<h3>Data Lembaga Konservasi</h3>
 <div class="row">
     <div class="col-md-12">
-        <a href="<?php echo base_url("app/pengedartambah") ?>" style="margin: 5px 0 10px 0px" class="btn  btn-primary tambah   btn-icon icon-left">
-            <i class="fa fa-plus"></i> Tambah Data Pengedar</a>
-
+        <?php pesan_get('msg', "Berhasil Menambahkan Lembaga Konservasi", "Gagal Menambahkan Lembaga konservasi") ?>
+        <a href="<?php echo base_url("app/lemkontambah") ?>" style="margin: 5px 0 10px 0px" class="btn  btn-primary tambah   btn-icon icon-left">
+            <i class="fa fa-plus"></i> Tambah Data Lembaga Konservasi</a>
         <table class="table table-bordered datatable" id="table-1" style="font-size:12px">
             <thead>
                 <tr>
                     <th width='30px'>No</th>
-                    <th>Nomor SK</th>
+                    <th>SK</th>
                     <th>Masa Berlaku</th>
                     <th>Pemilik</th>
-                    <th>Jenis Komoditi</th>
                     <th width="200px">Opsi</th>
                 </tr>
             </thead>
@@ -48,14 +47,12 @@
                                 <td><b>" . $tglawal . '</b> sampai <b>' . $tglakhir . "</b></td>
 
                                 <td>" . $row['pemilik'] . "</td>
-                                <td>" . $row['jenis_komoditi'] . "</td>
                                 <td>
-								<div>
-                                  <a href='" . base_url("app/pengedarlihat?id=" . $row['id'] . "") . "' class='btn btn-default  lihat' title='Lihat' id='" . $row['id'] . "'><i class='fa fa-eye'></i> Lihat</a>
-                                    <a href='" . base_url("app/pengedaredit?id=" . $row['id'] . "") . "' class='btn btn-primary edit' title='Edit' id='" . $row['id'] . "' ><i class='fa fa-edit' id='" . $row['id'] . "'></i> Edit</a>
+                                    <div>
+                                    <a href='" . base_url("app/lemkonlihat?id=" . $row['id'] . "") . "' class='btn btn-default  lihat' title='Lihat' id='" . $row['id'] . "'><i class='fa fa-eye'></i> Lihat</a>
+                                    <a href='" . base_url("app/lemkonedit?id=" . $row['id'] . "") . "' class='btn btn-primary edit' title='Edit' id='" . $row['id'] . "' ><i class='fa fa-edit' id='" . $row['id'] . "'></i> Edit</a>
 									<a href='#' class='btn btn-danger  hapus' title='Hapus' id='" . $row['id'] . "'><i class='fa fa-trash-o'></i> Hapus</a>
-								</div>
-                                
+                                    </div>
 								</td>
 							</tr>
 						";
@@ -86,33 +83,12 @@
                 [0, "asc"]
             ],
             "fnDrawCallback": function() {
-                $(".hapus").click(function(e) {
-                    var v_id = this.id;
-                    jQuery.confirm({
-                        title: 'Hapus!',
-                        content: 'Yakin ingin menghapus ?',
-                        buttons: {
-                            hapus: {
-                                text: 'Hapus',
-                                btnClass: 'btn-primary',
-                                action: function() {
-                                    // alert('asek')
-                                    window.location.assign("<?php echo base_url() ?>app/pengedarhapus?id="+v_id);
-                                }
-                            },
-                            batal: function() {
-
-                            }
-                        }
-                    });
-                });
+                $(".hapus").click(function(e) {});
             },
         });
         // Initalize Select Dropdown after DataTables is created
         $table1.closest('.dataTables_wrapper').find('select').select2({
             minimumResultsForSearch: -1
         });
-
-
     });
 </script>

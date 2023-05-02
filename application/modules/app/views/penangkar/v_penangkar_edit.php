@@ -4,7 +4,7 @@
             <i class="fa fa-satwas"></i>App</a>
     </li>
     <li>
-        <a href="<?php echo base_url() ?>app/penangkarx ">
+        <a href="<?php echo base_url() ?>app/penangkar">
             <i class="fa fa-satwa"></i>Penangkar</a>
     </li>
     <li class="active">
@@ -33,9 +33,9 @@
                     <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>">
                     <input type="hidden" name="id" value="<?= $data['id'] ?>">
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">Nomor Seri *</label>
+                        <label class="col-lg-4 control-label">Nomor SK *</label>
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" id="noseri" name="noseri" value="<?php echo $data['nosk'] ?>">
+                            <input type="text" class="form-control" id="nosk" name="nosk" value="<?php echo $data['nosk'] ?>">
                         </div>
                     </div>
                     <div class="form-group">

@@ -18,6 +18,7 @@ class App extends CI_Controller
         $this->load->model("m_kee");
         $this->load->model("m_penangkar");
         $this->load->model("m_pengedar");
+        $this->load->model("m_lemkon");
     }
 
     // Dashboard
@@ -1954,8 +1955,6 @@ class App extends CI_Controller
             $file = $upload["raw_name"] . $upload["file_ext"];
             $array['foto'] = $file;
             $exec = $this->m_penangkar->tambahdata($array);
-            var_dump($exec);
-            exit;
             if ($exec) {
                 redirect(base_url("app/penangkar?msg=1"));
             } else redirect(base_url("app/penangkar?msg=0"));
@@ -2060,11 +2059,12 @@ class App extends CI_Controller
         if ($this->input->post()) {
             $array = array(
                 'nosk' => $this->input->post('nosk'),
+                'tentang_sk' => $this->input->post('tentang_sk'),
                 'tglawal_berlaku' => tanggalawal($this->input->post('tglawal_berlaku')),
                 'tglakhir_berlaku' => tanggalawal($this->input->post('tglakhir_berlaku')),
                 'pemilik' => $this->input->post('pemilik'),
                 'alamat' => $this->input->post('alamat'),
-                'jenis' => $this->input->post('jenis'),
+                'jenis_komoditi' => $this->input->post('jenis_komoditi'),
             );
             $config['upload_path'] = './assets/images/pengedar';
             $config['allowed_types'] = 'jpg|jpeg|JPG|JPEG|PNG|png|PDF|pdf|doc|DOC';
@@ -2074,13 +2074,194 @@ class App extends CI_Controller
             $file = $upload["raw_name"] . $upload["file_ext"];
             $array['foto'] = $file;
             $exec = $this->m_pengedar->tambahdata($array);
-            var_dump($exec);
-            exit;
             if ($exec) {
                 redirect(base_url("app/pengedar?msg=1"));
             } else redirect(base_url("app/pengedar?msg=0"));
         } else {
             $this->layout->render('pengedar/v_pengedartambah', $variabel);
+        }
+    }
+
+    public function pengedarlihat()
+    {
+        $variabel['csrf'] = csrf();
+        $id = $this->input->get("id");
+        $exec = $this->m_pengedar->lihatdatasatu($id);
+        if ($exec->num_rows() > 0) {
+            $variabel['data'] = $exec->row_array();
+            $this->layout->render('pengedar/v_pengedar_lihat', $variabel);
+        } else {
+            redirect(base_url("app/pengedar"));
+        }
+    }
+
+    public function pengedaredit()
+    {
+        $variabel['csrf'] = csrf();
+        if ($this->input->post()) {
+            $id = $this->input->post('id');
+
+            $array = array(
+                'nosk' => $this->input->post('nosk'),
+                'tglawal_berlaku' => tanggalawal($this->input->post('tglawal_berlaku')),
+                'tglakhir_berlaku' => tanggalawal($this->input->post('tglakhir_berlaku')),
+                'pemilik' => $this->input->post('pemilik'),
+                'alamat' => $this->input->post('alamat'),
+                'jenis' => $this->input->post('jenis'),
+                'asal_usul' => $this->input->post('asal_usul'),
+                'jumlah_fo' => $this->input->post('jumlah')
+            );
+            $config['upload_path'] = './assets/images/pengedar';
+            $config['allowed_types'] = 'jpg|jpeg|JPG|JPEG|PNG|png';
+            $this->load->library('upload', $config);
+            if ($this->upload->do_upload("foto")) {
+                $upload = $this->upload->data();
+                $foto = $upload["raw_name"] . $upload["file_ext"];
+                $array['foto'] = $foto;
+
+                $query2 = $this->m_pengedar->lihatdatasatu($id);
+                $row2 = $query2->row();
+                $berkas1temp = $row2->foto;
+                $path1 = './assets/images/pengedar/' . $berkas1temp . '';
+                if (is_file($path1)) {
+                    unlink($path1);
+                }
+            } else if ($this->input->post('foto') == "") {
+                $query2 = $this->m_pengedar->lihatdatasatu($id);
+                $row2 = $query2->row();
+                $berkas1temp = $row2->foto;
+                $path1 = './assets/images/pengedar/' . $berkas1temp . '';
+                if (is_file($path1)) {
+                    unlink($path1); //menghapus gambar di folder halaman
+                }
+                $array['foto'] = "";
+            }
+
+            $exec = $this->m_pengedar->editdata($id, $array);
+            if ($exec) redirect(base_url("app/pengedaredit?id=" . $id . "&msg=1"));
+            else redirect(base_url("app/pengedaredit?id=" . $id . "&msg=0"));
+        } else {
+            $id = $this->input->get("id");
+            $exec = $this->m_pengedar->lihatdatasatu($id);
+            if ($exec->num_rows() > 0) {
+                $variabel['data'] = $exec->row_array();
+                $this->layout->render('pengedar/v_pengedar_edit', $variabel);
+            } else {
+                redirect(base_url("app/pengedar"));
+            }
+        }
+    }
+    public function pengedarhapus()
+    {
+        $id = $this->input->get("id");
+        $query2 = $this->m_pengedar->lihatdatasatu($id);
+        $row2 = $query2->row();
+        $berkas1temp = $row2->foto;
+        $path1 = './assets/images/pengedar/' . $berkas1temp . '';
+        if (is_file($path1)) {
+            unlink($path1);
+        }
+        $exec = $this->m_pengedar->hapus($id);
+        redirect(base_url() . "app/pengedar?msg=0");
+    }
+
+    public function lemkon()
+    {
+        $variabel['csrf'] = csrf();
+        $variabel['data'] = $this->m_lemkon->lihatdata();
+        // var_dump( $variabel['data']);exit;
+        $this->layout->render('lemkon/v_lemkon', $variabel);
+    }
+    public function lemkontambah()
+    {
+        $variabel['csrf'] = csrf();
+
+        if ($this->input->post()) {
+            $array = array(
+                'nosk' => $this->input->post('nosk'),
+                'tglawal_berlaku' => tanggalawal($this->input->post('tglawal_berlaku')),
+                'tglakhir_berlaku' => tanggalawal($this->input->post('tglakhir_berlaku')),
+                'pemilik' => $this->input->post('pemilik'),
+                'alamat' => $this->input->post('alamat')
+            );
+            $arrayDetail = json_decode($this->input->post('detail'), true);
+            $config['upload_path'] = './assets/images/lemkon';
+            $config['allowed_types'] = 'jpg|jpeg|JPG|JPEG|PNG|png|PDF|pdf|doc|DOC';
+            $this->load->library('upload', $config);
+            $this->upload->do_upload("foto");
+            $upload = $this->upload->data();
+            $file = $upload["raw_name"] . $upload["file_ext"];
+            $array['foto'] = $file;
+            $exec = $this->m_lemkon->tambahdata($array, $arrayDetail);
+            // exit;
+            if ($exec['status']) {
+                $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(array('status' => true)));
+            } else {
+                $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(array('status' => false)));
+            }
+        } else {
+            $this->layout->render('lemkon/v_lemkontambah', $variabel);
+        }
+    }
+
+    public function lemkonedit()
+    {
+        $variabel['csrf'] = csrf();
+        if ($this->input->post()) {
+            $id = $this->input->post('id');
+
+            $array = array(
+                'nosk' => $this->input->post('nosk'),
+                'tglawal_berlaku' => tanggalawal($this->input->post('tglawal_berlaku')),
+                'tglakhir_berlaku' => tanggalawal($this->input->post('tglakhir_berlaku')),
+                'pemilik' => $this->input->post('pemilik'),
+                'alamat' => $this->input->post('alamat'),
+                'jenis' => $this->input->post('jenis'),
+                'asal_usul' => $this->input->post('asal_usul'),
+                'jumlah_fo' => $this->input->post('jumlah')
+            );
+            $config['upload_path'] = './assets/images/pengedar';
+            $config['allowed_types'] = 'jpg|jpeg|JPG|JPEG|PNG|png';
+            $this->load->library('upload', $config);
+            if ($this->upload->do_upload("foto")) {
+                $upload = $this->upload->data();
+                $foto = $upload["raw_name"] . $upload["file_ext"];
+                $array['foto'] = $foto;
+
+                $query2 = $this->m_pengedar->lihatdatasatu($id);
+                $row2 = $query2->row();
+                $berkas1temp = $row2->foto;
+                $path1 = './assets/images/pengedar/' . $berkas1temp . '';
+                if (is_file($path1)) {
+                    unlink($path1);
+                }
+            } else if ($this->input->post('foto') == "") {
+                $query2 = $this->m_pengedar->lihatdatasatu($id);
+                $row2 = $query2->row();
+                $berkas1temp = $row2->foto;
+                $path1 = './assets/images/pengedar/' . $berkas1temp . '';
+                if (is_file($path1)) {
+                    unlink($path1); //menghapus gambar di folder halaman
+                }
+                $array['foto'] = "";
+            }
+
+            $exec = $this->m_pengedar->editdata($id, $array);
+            if ($exec) redirect(base_url("app/pengedaredit?id=" . $id . "&msg=1"));
+            else redirect(base_url("app/pengedaredit?id=" . $id . "&msg=0"));
+        } else {
+            $id = $this->input->get("id");
+            $exec = $this->m_pengedar->lihatdatasatu($id);
+            if ($exec->num_rows() > 0) {
+                $variabel['data'] = $exec->row_array();
+                $this->layout->render('pengedar/v_pengedar_edit', $variabel);
+            } else {
+                redirect(base_url("app/pengedar"));
+            }
         }
     }
 }

@@ -136,3 +136,58 @@
     </footer>
 
 </div>
+
+<script>
+$('#form').validate({ // initialize plugin
+    highlight: function (label) {
+        $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
+        //$('.error').css({'font-size':'9px','margin-bottom':'0px'});
+        $('#status-error').css({'font-size':'6px'});
+    },
+    success: function (label) {
+        $(label).closest('.form-group').removeClass('has-error');
+        label.remove();
+    },
+    errorPlacement: function (error, element) {
+        var placement = element.closest('.input-group');
+        if (!placement.get(0)) {
+            placement = element;
+        }
+        if (error.text() !== '') {
+            placement.after(error);
+        }
+        },
+
+        rules: {
+            nosk: {
+                required: true
+            },
+            pemilik: {
+                required: true,
+            },
+            alamat: {
+                required: true,
+            },
+            jenis: {
+                required: true,
+            },
+            jumlah_fo: {
+                required: true,
+                number: true
+            },
+            tglawal_berlaku: {
+                required: true,
+            },
+            tglakhir_berlaku: {
+                required: true,
+            },
+            asal_usul: {
+                required: true,
+            },
+        }
+});
+
+ 
+
+ 
+</script>
