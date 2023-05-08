@@ -9,9 +9,19 @@ class M_lemkon extends CI_Model
 
     function lihatdatasatu($id)
     {
-        $this->db->select("app_penangkar.*");
-        $this->db->where("app_penangkar.id", $id);
-        return $this->db->get('app_penangkar');
+        $this->db->select('a.*, (SELECT CONCAT(\'[\', GROUP_CONCAT(CONCAT(
+            \'{\"satwa\":\"\', REPLACE(b.satwa, \'\\"\', \'\\\\\\\"\'), \'\\",\',
+            \'"tahun\":\"\', REPLACE(b.tahun, \'\\"\', \'\\\\\\\"\'), \'\\",\',
+            \'"id_detail\":\"\', REPLACE(b.id, \'\\"\', \'\\\\\\\"\'), \'\\",\',
+            \'"jumlah\":\"\', REPLACE(b.jumlah, \'\\"\', \'\\\\\\\"\'), \'"}\'
+        )
+        ORDER BY b.id ASC
+        SEPARATOR \',\'
+        ), \']\')
+        FROM app_lemkon_detail b WHERE b.id_lembaga = a.id) as detail', FALSE);
+        $this->db->from('app_lemkon a');
+        $this->db->where('a.id', $id);
+        return $this->db->get();
     }
 
 
@@ -27,7 +37,7 @@ class M_lemkon extends CI_Model
     function cekdata($id)
     {
         $this->db->where("id", $id);
-        return $this->db->get('app_penangkar')->num_rows();
+        return $this->db->get('app_lemkon')->num_rows();
     }
 
     function tambahdata($array, $arrayDetail)
@@ -57,14 +67,73 @@ class M_lemkon extends CI_Model
     }
 
 
-    function editdata($id, $array)
+    function editdata($id, $array, $arrayDetail, $arrayDeleted)
     {
-        $this->db->where("id", $id);
-        return $this->db->update('app_penangkar', $array);
+        $this->db->trans_start();
+
+        try {
+            $this->db->where("id", $id);
+            $this->db->update('app_lemkon', $array);
+
+            foreach ($arrayDetail as $data) {
+                $id_detail = $data['id_detail'];
+                if ($id_detail != null){
+                    $newData = array(
+                        "satwa" => $data['satwa'],
+                        "tahun" => $data['tahun'],
+                        "jumlah" => $data['jumlah']
+                    );
+                    $this->db->where("id", $id_detail);
+                    $this->db->update('app_lemkon_detail', $newData);
+                }else{
+                    $newData = array(
+                        "id_lembaga" => $id,    
+                        "satwa" => $data['satwa'],
+                        "tahun" => $data['tahun'],
+                        "jumlah" => $data['jumlah']
+                    );
+                    $this->db->insert('app_lemkon_detail', $newData);
+                }
+            }
+
+            if (count($arrayDeleted) > 0) {
+                foreach ($arrayDeleted as $data2) {
+                    $this->db->where("id", $data2);
+                    $this->db->delete('app_lemkon_detail');
+                }
+            }
+            $this->db->trans_complete();
+            if ($this->db->trans_status() === FALSE) {
+                return array('status' => false, 'message' => 'Terjadi kesalahan saat menambahkan data.');
+            } else {
+                return array('status' => true, 'message' => 'Data berhasil ditambahkan.');
+            }
+        } catch (Exception $e) {
+            $this->db->trans_rollback();
+            return array('status' => false, 'message' => 'Terjadi kesalahan saat memperbarui data. ' . $e->getMessage());
+        }
     }
+
     function hapus($id)
     {
-        $this->db->where("id", $id);
-        return $this->db->delete('app_penangkar');
+
+        $this->db->trans_start();
+
+        try {
+            $this->db->where("id", $id);
+            $this->db->delete('app_lemkon');
+            $this->db->where("id_lembaga", $id);
+            $this->db->delete('app_lemkon_detail');
+            $this->db->trans_complete();
+            if ($this->db->trans_status() === FALSE) {
+                return array('status' => false, 'message' => 'Terjadi kesalahan saat menambahkan data.');
+            } else {
+                return array('status' => true, 'message' => 'Data berhasil ditambahkan.');
+            }
+        } catch (Exception $e) {
+            $this->db->trans_rollback();
+            return array('status' => false, 'message' => 'Terjadi kesalahan saat menambahkan data. ' . $e->getMessage());
+        }
+        
     }
 }

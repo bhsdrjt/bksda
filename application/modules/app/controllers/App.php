@@ -2212,19 +2212,20 @@ class App extends CI_Controller
     {
         $variabel['csrf'] = csrf();
         if ($this->input->post()) {
+            // var_dump('cek123');
+            // var_dump($this->input->post());exit;
             $id = $this->input->post('id');
-
             $array = array(
                 'nosk' => $this->input->post('nosk'),
                 'tglawal_berlaku' => tanggalawal($this->input->post('tglawal_berlaku')),
                 'tglakhir_berlaku' => tanggalawal($this->input->post('tglakhir_berlaku')),
                 'pemilik' => $this->input->post('pemilik'),
-                'alamat' => $this->input->post('alamat'),
-                'jenis' => $this->input->post('jenis'),
-                'asal_usul' => $this->input->post('asal_usul'),
-                'jumlah_fo' => $this->input->post('jumlah')
+                'alamat' => $this->input->post('alamat')
             );
-            $config['upload_path'] = './assets/images/pengedar';
+            $arrayDetail = json_decode($this->input->post('detail'), true);
+            $arrayDeleted = json_decode($this->input->post('id_deleted'), true);
+            // var_dump($id,$array,$arrayDetail,$arrayDeleted);exit;
+            $config['upload_path'] = './assets/images/lemkon';
             $config['allowed_types'] = 'jpg|jpeg|JPG|JPEG|PNG|png';
             $this->load->library('upload', $config);
             if ($this->upload->do_upload("foto")) {
@@ -2232,36 +2233,84 @@ class App extends CI_Controller
                 $foto = $upload["raw_name"] . $upload["file_ext"];
                 $array['foto'] = $foto;
 
-                $query2 = $this->m_pengedar->lihatdatasatu($id);
+                $query2 = $this->m_lemkon->lihatdatasatu($id);
                 $row2 = $query2->row();
                 $berkas1temp = $row2->foto;
-                $path1 = './assets/images/pengedar/' . $berkas1temp . '';
+                $path1 = './assets/images/lemkon/' . $berkas1temp . '';
                 if (is_file($path1)) {
                     unlink($path1);
                 }
             } else if ($this->input->post('foto') == "") {
-                $query2 = $this->m_pengedar->lihatdatasatu($id);
+                $query2 = $this->m_lemkon->lihatdatasatu($id);
                 $row2 = $query2->row();
                 $berkas1temp = $row2->foto;
-                $path1 = './assets/images/pengedar/' . $berkas1temp . '';
+                $path1 = './assets/images/lemkon/' . $berkas1temp . '';
                 if (is_file($path1)) {
                     unlink($path1); //menghapus gambar di folder halaman
                 }
                 $array['foto'] = "";
             }
 
-            $exec = $this->m_pengedar->editdata($id, $array);
-            if ($exec) redirect(base_url("app/pengedaredit?id=" . $id . "&msg=1"));
-            else redirect(base_url("app/pengedaredit?id=" . $id . "&msg=0"));
+            $exec = $this->m_lemkon->editdata($id, $array, $arrayDetail, $arrayDeleted);
+            if ($exec['status']) {
+                $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(array('status' => true)));
+            } else {
+                $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(array('status' => false)));
+            }
+
+            //     if ($exec) redirect(base_url("app/lemkonedit?id=" . $id . "&msg=1"));
+            //     else redirect(base_url("app/lemkonedit?id=" . $id . "&msg=0"));
         } else {
+            // var_dump('cek');
+            // var_dump($this->input->post());exit;
             $id = $this->input->get("id");
-            $exec = $this->m_pengedar->lihatdatasatu($id);
+            // var_dump($id);
+            $exec = $this->m_lemkon->lihatdatasatu($id);
+            // var_dump($exec->row_array());
+            // var_dump(json_decode($exec->row_array()['detail'],TRUE));exit;
             if ($exec->num_rows() > 0) {
                 $variabel['data'] = $exec->row_array();
-                $this->layout->render('pengedar/v_pengedar_edit', $variabel);
+                $this->layout->render('lemkon/v_lemkon_edit', $variabel);
             } else {
-                redirect(base_url("app/pengedar"));
+                redirect(base_url("app/lemkon"));
             }
+        }
+    }
+
+    public function lemkonhapus()
+    {
+        $id = $this->input->get("id");
+        $query2 = $this->m_lemkon->lihatdatasatu($id);
+        $row2 = $query2->row();
+        $berkas1temp = $row2->foto;
+        $path1 = './assets/images/lemkon/' . $berkas1temp . '';
+        if (is_file($path1)) {
+            unlink($path1);
+        }
+        $exec = $this->m_lemkon->hapus($id);
+        if ($exec['status']) {
+            redirect(base_url() . "app/lemkon?msg2=1");
+        } else {
+            redirect(base_url() . "app/lemkon?msg2=0");
+        }
+        // var_dump($exec);exit;
+        redirect(base_url() . "app/lemkon?msg=0");
+    }
+
+    public function lemkonlihat()
+    {
+        $variabel['csrf'] = csrf();
+        $id = $this->input->get("id");
+        $exec = $this->m_lemkon->lihatdatasatu($id);
+        if ($exec->num_rows() > 0) {
+            $variabel['data'] = $exec->row_array();
+            $this->layout->render('lemkon/v_lemkon_lihat', $variabel);
+        } else {
+            redirect(base_url("app/lemkon"));
         }
     }
 }

@@ -11,7 +11,8 @@
 <h3>Data Lembaga Konservasi</h3>
 <div class="row">
     <div class="col-md-12">
-        <?php pesan_get('msg', "Berhasil Menambahkan Lembaga Konservasi", "Gagal Menambahkan Lembaga konservasi") ?>
+        <?php pesan_get('msg', "Berhasil Menambahkan Lembaga Konservasi", "Gagal Menambahkan Lembaga konservasi","Berhasil Hapus Data","Gagal Hapus Data") ?>
+        <?php pesan_get('msg2',"Berhasil Hapus Data","Gagal Hapus Data") ?>
         <a href="<?php echo base_url("app/lemkontambah") ?>" style="margin: 5px 0 10px 0px" class="btn  btn-primary tambah   btn-icon icon-left">
             <i class="fa fa-plus"></i> Tambah Data Lembaga Konservasi</a>
         <table class="table table-bordered datatable" id="table-1" style="font-size:12px">
@@ -83,7 +84,27 @@
                 [0, "asc"]
             ],
             "fnDrawCallback": function() {
-                $(".hapus").click(function(e) {});
+                $(".hapus").click(function(e) {
+                    var v_id = this.id;
+                    console.log(v_id)
+                    // return false
+                    jQuery.confirm({
+                        title: 'Hapus!',
+                        content: 'Yakin ingin menghapus ?',
+                        buttons: {
+                            hapus: {
+                                text: 'Hapus',
+                                btnClass: 'btn-primary',
+                                action: function() {
+                                    window.location.assign("<?php echo base_url() ?>app/lemkonhapus?id=" + v_id);
+                                }
+                            },
+                            batal: function() {
+
+                            }
+                        }
+                    });
+                });
             },
         });
         // Initalize Select Dropdown after DataTables is created

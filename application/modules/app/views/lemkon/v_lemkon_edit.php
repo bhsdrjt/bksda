@@ -39,14 +39,22 @@
     </div>
 
     <div class="panel-body">
-        <form role="form" class="form-horizontal validate" action="<?php echo base_url() ?>app/lemkontambah" method="post" enctype="multipart/form-data" id="form-data">
+    <?php pesan_get('msg', "Berhasil Edit Lembaga Konservasi", "Gagal Edit Lembaga konservasi") ?>
+        <form role="form" class="form-horizontal validate" action="<?php echo base_url() ?>app/lemkonedit" method="post" enctype="multipart/form-data" id="form-data">
             <div class="row">
                 <div class="col-md-6">
                     <input type="hidden" name="<?= $csrf['name'] ?>" id="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>">
+                    <input type="hidden" name="id" value="<?= $data['id'] ?>">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Nama Pemilik *</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="nama_pemilik" name="nama_pemilik" value="<?php echo $data['nama_pemilik'] ?>">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-lg-4 control-label">SK *</label>
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" id="nosk" name="nosk">
+                            <input type="text" class="form-control" id="nosk" name="nosk" value="<?php echo $data['nosk'] ?>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -64,36 +72,39 @@
                         </div>
                     </div>
 
+
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Nama Pemilik *</label>
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" id="pemilik" name="pemilik">
+                            <input type="text" class="form-control" id="pemilik" name="pemilik" value="<?php echo $data['pemilik'] ?>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Alamat *</label>
                         <div class="col-lg-8">
-                            <textarea class="form-control" id="alamat" name="alamat"></textarea>
+                            <textarea class="form-control" id="alamat" name="alamat"><?php echo $data['alamat'] ?></textarea>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Foto</label>
                         <div class="col-sm-8">
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput <?php echo ($data['foto'] == "") ? "fileinput-new" : "fileinput-exists" ?> " data-provides="fileinput">
+                                <input type="hidden" value="<?php echo $data['foto'] ?>" name="foto">
                                 <div class="fileinput-new thumbnail" style="max-width: 300px; height: 200px;" data-trigger="fileinput">
                                     <img src="http://placehold.it/300x200" alt="...">
                                 </div>
-                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 300px; max-height: 200px"></div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 300px; height: 200px;" data-trigger="fileinput">
+                                    <img src="<?php echo base_url() . "assets/images/lemkon/" . $data['foto'] ?>" alt="...">
+                                </div>
                                 <div>
                                     <span class="btn btn-white btn-file">
                                         <span class="fileinput-new">Select image</span>
                                         <span class="fileinput-exists">Change</span>
                                         <input type="file" name="foto" accept="image/*">
                                     </span>
-                                    <a href="#" class="btn btn-orange fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                    <a href="#" class="btn btn-orange  	fileinput-exists" data-dismiss="fileinput">Remove</a>
                                 </div>
                             </div>
                         </div>
@@ -129,6 +140,23 @@
                                 <button type="button" class="btn btn-primary" id="simpan">Simpan</button>
                             </td>
                         </tr>
+                        <?php
+                        $detail  = json_decode($data['detail'], true);
+                        if (!empty($detail)) {
+                            foreach ($detail as $d) { ?>
+                                <tr>
+                                    <td id="satwa1"><?php echo $d['satwa'] ?> </td>
+                                    <td id="tahun1"><?php echo $d['tahun'] ?></td>
+                                    <td id="jumlah1"><input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="<?php echo $d['jumlah'] ?>"></td>
+                                    <td>
+                                        <input type="hidden" class="form-control" value="<?php echo $d['id_detail'] ?>" id="id_detail">
+                                        <button type="button" class="btn btn-danger hapus">Hapus</button>
+                                    </td>
+                                </tr>
+                        <?php
+                            }
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -148,6 +176,7 @@
 </div>
 
 <script>
+    var deletedRows = [];
     jQuery(document).ready(function($) {
         var csfrData = {};
         csfrData['<?php echo $this->security->get_csrf_token_name(); ?>'] = '<?php echo $this->security->get_csrf_hash(); ?>';
@@ -157,8 +186,8 @@
         var $table1 = jQuery('#table-1');
         // Initialize DataTable
         $table1.DataTable({
-            "ordering": false,
             "paging": false,
+            "ordering": false,
             "searching": false,
             "lengthChange": false,
             "aLengthMenu": [
@@ -206,7 +235,12 @@
                 $("#jumlah").val("");
                 return; // Keluar dari function jika tidak valid
             }
-            $table1.DataTable().row.add([satwa, tahun, jumlah, '<button type="button" class="btn btn-danger hapus">Hapus</button>']).draw(false);
+            $table1.DataTable().row.add([
+                satwa,
+                tahun,
+                '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jumlah + '">',
+                '<button type="button" class="btn btn-danger hapus">Hapus</button>'
+            ]).draw(false);
 
             // Reset form
             $("#satwa").val("");
@@ -219,7 +253,11 @@
             var formData = new FormData(document.getElementById('form-data'));
             var formAction = jQuery('#form-data').attr('action');
             var detail = __detaildata();
+            // console.log(detail)
+            // console.log(deletedRows)
+            // return false
             formData.append('detail', JSON.stringify(detail));
+            formData.append('id_deleted', JSON.stringify(deletedRows));
             jQuery.ajax({
                 url: formAction,
                 method: 'POST',
@@ -229,9 +267,9 @@
                 success: function(response) {
                     console.log(response);
                     if (response) {
-                        window.location.href = "<?php echo base_url() ?>app/lemkon?msg=1"
+                        window.location.href = "<?php echo base_url() ?>app/lemkonedit?id=<?= $data['id'] ?>&msg=1"
                     } else {
-                        window.location.href = "<?php echo base_url() ?>app/lemkon?msg=0"
+                        window.location.href = "<?php echo base_url() ?>app/lemkonedit?id=<?= $data['id'] ?> &msg=0"
                     }
 
                 },
@@ -243,19 +281,28 @@
 
         function __detaildata() {
             var $table = jQuery('#table-1');
-            var data = [];
+            var detail = [];
 
-            $table.DataTable().rows().every(function() {
-                var rowData = this.data();
-                data.push({
-                    satwa: rowData[0],
-                    tahun: rowData[1],
-                    jumlah: parseInt(rowData[2])
+            $table.find('tbody tr:gt(0)').each(function() {
+                var $row = jQuery(this);
+                var id_detail = $row.find('#id_detail').val(); // Retrieve value from the hidden input field
+                id_detail = id_detail !== undefined ? parseInt(id_detail) : null;
+
+                var satwa = $row.find('td:eq(0)').text().trim(); // Get the trimmed text content of the first column
+                var tahun = $row.find('td:eq(1)').text().trim(); // Get the trimmed text content of the second column
+                var jumlah = parseInt($row.find('td:eq(2) input').val()); // Retrieve value from the input field
+
+                detail.push({
+                    id_detail: id_detail,
+                    satwa: satwa,
+                    tahun: tahun,
+                    jumlah: isNaN(jumlah) ? 0 : jumlah // Handle NaN values
                 });
             });
-            data.shift();
-            return data;
+
+            return detail;
         }
+
 
     });
 
@@ -289,6 +336,32 @@
         return true;
 
     }
+    $(document).on('click', '.hapus', function() {
+        // Get current row
+        var currentRow = $(this).closest('tr');
+
+        // Clone current row and remove "hapus" button
+        var tempRow = currentRow.clone();
+        tempRow.find('.hapus').remove();
+
+        // Store row data in an object
+        if (typeof tempRow.find('#id_detail').val() !== 'undefined') {
+            // var rowData = {
+            //     tempRow.find('#id_detail').val()
+            // };
+
+            // Remove current row from DOM
+            currentRow.remove();
+
+            // Add row data to an array of deleted rows
+
+            deletedRows.push(parseInt(tempRow.find('#id_detail').val()));
+            // console.log('Deleted rows:', deletedRows);
+        }
+
+        // Do something with the deleted rows, e.g. send them to server via AJAX
+    });
+
 
 
 
