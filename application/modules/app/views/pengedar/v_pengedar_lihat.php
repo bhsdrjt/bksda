@@ -63,7 +63,7 @@
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Jenis*</label>
                         <div class="col-lg-8">
-                            <p class="form-control-static" style="font-weight:bold; font-style:italic;"> :<?php echo $data['jenis_komoditi'] ?> </p>
+                            <p class="form-control-static"> :<?php echo $data['jenis_komoditi'] ?> </p>
 
                         </div>
                     </div>

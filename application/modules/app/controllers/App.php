@@ -1937,15 +1937,16 @@ class App extends CI_Controller
     {
         $variabel['csrf'] = csrf();
         if ($this->input->post()) {
+
             $array = array(
                 'nosk' => $this->input->post('nosk'),
                 'tglawal_berlaku' => tanggalawal($this->input->post('tglawal_berlaku')),
                 'tglakhir_berlaku' => tanggalawal($this->input->post('tglakhir_berlaku')),
                 'pemilik' => $this->input->post('pemilik'),
                 'alamat' => $this->input->post('alamat'),
-                'jenis' => $this->input->post('jenis'),
+                'jenis' => str_replace(array("<em>", "</em>", "<p>", "</p>"), array("<i>", "</i>", "", ""), $this->input->post('jenis')),
                 'asal_usul' => $this->input->post('asal_usul'),
-                'jumlah_fo' => $this->input->post('jumlah')
+                'jumlah_fo' => $this->input->post('jumlah_fo')
             );
             $config['upload_path'] = './assets/images/penangkar';
             $config['allowed_types'] = 'jpg|jpeg|JPG|JPEG|PNG|png|PDF|pdf|doc|DOC';
@@ -1993,6 +1994,7 @@ class App extends CI_Controller
         $variabel['csrf'] = csrf();
         if ($this->input->post()) {
             $id = $this->input->post('id');
+            
 
             $array = array(
                 'nosk' => $this->input->post('nosk'),
@@ -2000,10 +2002,11 @@ class App extends CI_Controller
                 'tglakhir_berlaku' => tanggalawal($this->input->post('tglakhir_berlaku')),
                 'pemilik' => $this->input->post('pemilik'),
                 'alamat' => $this->input->post('alamat'),
-                'jenis' => $this->input->post('jenis'),
+                'jenis' => str_replace(array("<em>", "</em>", "<p>", "</p>"), array("<i>", "</i>", "", ""), $this->input->post('jenis')),
                 'asal_usul' => $this->input->post('asal_usul'),
-                'jumlah_fo' => $this->input->post('jumlah')
+                'jumlah_fo' => $this->input->post('jumlah_fo')
             );
+            // var_dump($array);exit;
             $config['upload_path'] = './assets/images/penangkar';
             $config['allowed_types'] = 'jpg|jpeg|JPG|JPEG|PNG|png';
             $this->load->library('upload', $config);
@@ -2059,12 +2062,12 @@ class App extends CI_Controller
         if ($this->input->post()) {
             $array = array(
                 'nosk' => $this->input->post('nosk'),
-                'tentang_sk' => $this->input->post('tentang_sk'),
+                'tentang_sk' => str_replace(array("<em>", "</em>", "<p>", "</p>"), array("<i>", "</i>", "", ""), $this->input->post('tentang_sk')),
                 'tglawal_berlaku' => tanggalawal($this->input->post('tglawal_berlaku')),
                 'tglakhir_berlaku' => tanggalawal($this->input->post('tglakhir_berlaku')),
                 'pemilik' => $this->input->post('pemilik'),
                 'alamat' => $this->input->post('alamat'),
-                'jenis_komoditi' => $this->input->post('jenis_komoditi'),
+                'jenis_komoditi' => str_replace(array("<em>", "</em>", "<p>", "</p>"), array("<i>", "</i>", "", ""), $this->input->post('jenis_komoditi')),
             );
             $config['upload_path'] = './assets/images/pengedar';
             $config['allowed_types'] = 'jpg|jpeg|JPG|JPEG|PNG|png|PDF|pdf|doc|DOC';
@@ -2103,14 +2106,14 @@ class App extends CI_Controller
 
             $array = array(
                 'nosk' => $this->input->post('nosk'),
+                'tentang_sk' => str_replace(array("<em>", "</em>", "<p>", "</p>"), array("<i>", "</i>", "", ""), $this->input->post('tentang_sk')),
                 'tglawal_berlaku' => tanggalawal($this->input->post('tglawal_berlaku')),
                 'tglakhir_berlaku' => tanggalawal($this->input->post('tglakhir_berlaku')),
                 'pemilik' => $this->input->post('pemilik'),
                 'alamat' => $this->input->post('alamat'),
-                'jenis' => $this->input->post('jenis'),
-                'asal_usul' => $this->input->post('asal_usul'),
-                'jumlah_fo' => $this->input->post('jumlah')
+                'jenis_komoditi' => str_replace(array("<em>", "</em>", "<p>", "</p>"), array("<i>", "</i>", "", ""), $this->input->post('jenis_komoditi'))
             );
+            // var_dump($array);
             $config['upload_path'] = './assets/images/pengedar';
             $config['allowed_types'] = 'jpg|jpeg|JPG|JPEG|PNG|png';
             $this->load->library('upload', $config);

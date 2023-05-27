@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class M_pengedar extends CI_Model
 {
@@ -6,41 +6,41 @@ class M_pengedar extends CI_Model
     {
         parent::__construct();
     }
-    
+
     function lihatdatasatu($id)
     {
         $this->db->select("app_pengedar.*");
-        $this->db->where("app_pengedar.id",$id);
+        $this->db->where("app_pengedar.id", $id);
         return $this->db->get('app_pengedar');
     }
 
-   
+
 
     function lihatdata()
     {
         $this->db->select("app_pengedar.*");
+        $this->db->order_by('id', 'desc');
         return $this->db->get('app_pengedar');
     }
     function cekdata($id)
     {
-        $this->db->where("id",$id);
+        $this->db->where("id", $id);
         return $this->db->get('app_pengedar')->num_rows();
     }
 
     function tambahdata($array)
     {
-        return $this->db->insert('app_pengedar',$array);
+        return $this->db->insert('app_pengedar', $array);
     }
 
-    function editdata($id,$array)
+    function editdata($id, $array)
     {
-        $this->db->where("id",$id);
-        return $this->db->update('app_pengedar',$array);
+        $this->db->where("id", $id);
+        return $this->db->update('app_pengedar', $array);
     }
     function hapus($id)
     {
-        $this->db->where("id",$id);
+        $this->db->where("id", $id);
         return $this->db->delete('app_pengedar');
     }
-  
 }

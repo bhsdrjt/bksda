@@ -23,9 +23,14 @@
     .input-group-addon {
         width: 120px;
     }
+
+    i.mce-ico.mce-i-bold:before,
+    i.mce-ico.mce-i-italic:before {
+        font-size: 12px !important;
+    }
 </style>
 
-<h3>Tambah Satwa </h3>
+<h3>Tambah Lembaga Konservasi </h3>
 <div class="panel panel-primary" data-collapsed="0">
 
     <div class="panel-heading">
@@ -47,33 +52,58 @@
                         <label class="col-lg-4 control-label">SK *</label>
                         <div class="col-lg-8">
                             <input type="text" class="form-control" id="nosk" name="nosk">
+                            <span id="errorMessagenosk" style="color: red;"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Nama Pemilik *</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="pemilik" name="pemilik">
+                            <span id="errorMessagepemilik" style="color: red;"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Masa berlaku</label>
                         <div class="col-lg-8">
-                            <div class="input-group">
-                                <span class="input-group-addon">Tgl Awal</span>
-                                <input type="text" class="form-control datepicker" data-format="dd-mm-yyyy" value="<?php echo date("d-m-Y", strtotime($data['tglawal_berlaku'])); ?>" name="tglawal_berlaku" style="background-color:#fff" placeholder="" id="tglawal_berlaku" data-mask="date">
-                            </div>
-                            <br>
-                            <div class="input-group">
-                                <span class="input-group-addon">Tgl Berakhir</span>
-                                <input type="text" class="form-control datepicker" data-format="dd-mm-yyyy" value="<?php echo date("d-m-Y", strtotime($data['tglakhir_berlaku'])); ?>" name="tglakhir_berlaku" style="background-color:#fff" placeholder="" id="tglakhir_berlaku" data-mask="date">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label" for="tglawal_berlaku">Awal:</label>
+                                        <div class="col-lg-8">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control datepicker error-message" data-format="dd-mm-yyyy" value="" name="tglawal_berlaku" style="background-color:#fff" placeholder="" id="tglawal_berlaku" data-mask="date" aria-invalid="true">
+                                            </div>
+                                            <span id="errorMessageawal" style="color: red;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-lg-4 control-label" for="tglakhir_berlaku">Akhir:</label>
+                                        <div class="col-lg-8">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                                </div>
+                                                <input type="text" class="form-control datepicker error-message" data-format="dd-mm-yyyy" value="" name="tglakhir_berlaku" style="background-color:#fff" placeholder="" id="tglakhir_berlaku" data-mask="date" aria-invalid="true">
+                                            </div>
+                                            <span id="errorMessageakhir" style="color: red;"></span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">Nama Pemilik *</label>
-                        <div class="col-lg-8">
-                            <input type="text" class="form-control" id="pemilik" name="pemilik">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-lg-4 control-label">Alamat *</label>
                         <div class="col-lg-8">
                             <textarea class="form-control" id="alamat" name="alamat"></textarea>
+
+                            <span id="errorMessagealamat" style="color: red;"></span>
                         </div>
                     </div>
 
@@ -105,6 +135,8 @@
             <div class="col-md-12">
                 <br>
                 <label class="col-md-2 control-label text-left">Detail Data </label>
+                <span id="errorMessagedetail" style="color: red;"></span>
+                
                 <table class="table table-bordered datatable" id="table-1">
                     <thead>
                         <tr>
@@ -118,19 +150,23 @@
                         <tr>
                             <td>
                                 <input type="text" class="form-control" id="satwa">
+                                <span id="errorMessagesatwa" style="color: red;"></span>
                             </td>
-                            <td>
+                            <td style="vertical-align:middle;">
                                 <input type="text" class="form-control angka" onkeypress="return inputAngka(event)" id="tahun">
+                                <span id="errorMessagetahun" style="color: red;"></span>
                             </td>
-                            <td>
+                            <td style="vertical-align:middle;">
                                 <input type="text" class="form-control angka" onkeypress="return inputAngka(event)" id="jumlah">
+                                <span id="errorMessagejumlah" style="color: red;"></span>
                             </td>
-                            <td>
+                            <td style="vertical-align:middle; text-align:center;">
                                 <button type="button" class="btn btn-primary" id="simpan">Simpan</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                
             </div>
         </div>
 
@@ -149,6 +185,16 @@
 
 <script>
     jQuery(document).ready(function($) {
+
+        tinymce.init({
+            selector: '#satwa',
+            menubar: false,
+            toolbar: 'bold italic',
+            statusbar: false,
+            height: 100,
+            fontsize_formats: '6px 8px 10px'
+        });
+
         var csfrData = {};
         csfrData['<?php echo $this->security->get_csrf_token_name(); ?>'] = '<?php echo $this->security->get_csrf_hash(); ?>';
         $.ajaxSetup({
@@ -184,29 +230,19 @@
 
         $("#simpan").click(function() {
             var $table1 = jQuery('#table-1');
-            var satwa = $("#satwa").val();
+            var satwa = tinymce.get('satwa').getContent().replace(/<em>/g, '<i>').replace(/<\/em>/g, '</i>').replace(/<p>/g, '').replace(/<\/p>/g, '');
             var tahun = parseInt($("#tahun").val()); // Parse ke integer
             var jumlah = $("#jumlah").val();
 
-
-            if (satwa === "" || tahun === "" || jumlah === "") {
-                alert("Inputan tidak boleh kosong");
-                $("#satwa").val("");
-                $("#tahun").val("");
-                $("#jumlah").val("");
+            var error = validateDetail()
+            if (error >= 0) {
                 return;
             }
 
             // Validasi tahun
-            var currentYear = new Date().getFullYear();
-            if (tahun < 1980 || tahun > currentYear) {
-                alert("Tahun harus di antara 1980 dan " + currentYear);
-                $("#satwa").val("");
-                $("#tahun").val("");
-                $("#jumlah").val("");
-                return; // Keluar dari function jika tidak valid
-            }
-            $table1.DataTable().row.add([satwa, tahun, jumlah, '<button type="button" class="btn btn-danger hapus">Hapus</button>']).draw(false);
+
+
+            $table1.DataTable().row.add([satwa, tahun, '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jumlah + '">', '<button type="button" class="btn btn-danger hapus">Hapus</button>']).draw(false);
 
             // Reset form
             $("#satwa").val("");
@@ -215,7 +251,7 @@
         });
 
         jQuery('#tombol-simpan').click(function(event) {
-            event.preventDefault();
+            validateForm();
             var formData = new FormData(document.getElementById('form-data'));
             var formAction = jQuery('#form-data').attr('action');
             var detail = __detaildata();
@@ -241,21 +277,31 @@
             });
         });
 
+
+
         function __detaildata() {
             var $table = jQuery('#table-1');
-            var data = [];
+            var detail = [];
 
-            $table.DataTable().rows().every(function() {
-                var rowData = this.data();
-                data.push({
-                    satwa: rowData[0],
-                    tahun: rowData[1],
-                    jumlah: parseInt(rowData[2])
+            $table.find('tbody tr:gt(0)').each(function() {
+                var $row = jQuery(this);
+
+
+                var satwa = $row.find('td:eq(0)').html(); // Get the trimmed text content of the first column
+                var tahun = $row.find('td:eq(1)').text().trim(); // Get the trimmed text content of the second column
+                var jumlah = parseInt($row.find('td:eq(2) input').val()); // Retrieve value from the input field
+
+                detail.push({
+                    satwa: satwa,
+                    tahun: tahun,
+                    jumlah: isNaN(jumlah) ? 0 : jumlah // Handle NaN values
                 });
             });
-            data.shift();
-            return data;
+
+            return detail;
         }
+
+
 
     });
 
@@ -271,10 +317,6 @@
     // menambahkan event listener untuk setiap elemen input
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener("input", function() {
-            // memeriksa apakah nilai yang dimasukkan pengguna memenuhi kriteria minimal
-            if (this.value < 1) {
-                this.value = 1;
-            }
         });
     }
 
@@ -290,48 +332,88 @@
 
     }
 
+    function validateForm() {
+        let errorCount = 0;
+        let nosk = $('#nosk').val();
+        let pemilik = $('#pemilik').val();
+        let alamat = $('#alamat').val();
+        let tglawal_berlaku = $('#tglawal_berlaku').val();
+        let tglakhir_berlaku = $('#tglakhir_berlaku').val();
+        var $table = jQuery('#table-1');
+
+        $('#errorMessagenosk').empty();
+        $('#errorMessagepemilik').empty();
+        $('#errorMessagealamat').empty();
+        $('#errorMessageawal').empty();
+        $('#errorMessageakhir').empty();
+        $('#errorMessagedetail').empty();
+
+        if (nosk.trim() === '') {
+            $('#errorMessagenosk').append('Nomor SK tidak boleh kosong!<br>');
+            errorCount += 1;
+        }
+        if (pemilik.trim() === '') {
+            $('#errorMessagepemilik').append('Nama Pemilik tidak boleh kosong!<br>');
+            errorCount += 1;
+        }
+        if (alamat.trim() === '') {
+            $('#errorMessagealamat').append('Alamat tidak boleh kosong!<br>');
+            errorCount += 1;
+        }
+        if (tglawal_berlaku.trim() === '') {
+            $('#errorMessageawal').append('Masa berlaku - Tanggal Awal tidak boleh kosong!<br>');
+            errorCount += 1;
+        }
+        if (tglakhir_berlaku.trim() === '') {
+            $('#errorMessageakhir').append('Masa berlaku - Tanggal Akhir tidak boleh kosong!<br>');
+            errorCount += 1;
+        }
+        if ($table.find('tbody tr:gt(0)').length < 1){
+            $('#errorMessagedetail').append('Detail tidak boleh kosong!<br>');
+            errorCount += 1;
+            // alert('oyyy')
+        }
+
+        if (errorCount !== 0) {
+            preventDefault(); // Menghentikan pengiriman form jika terdapat kesalahan validasi
+        }
+    }
+
+    function validateDetail() {
+        let errorCount = 0;
+        let satwa = $('#satwa').val();
+        let tahun = $('#tahun').val();
+        let jumlah = $('#jumlah').val();
+        let currentYear = new Date().getFullYear();
+
+        $('#errorMessagesatwa').empty();
+        $('#errorMessagetahun').empty();
+        $('#errorMessagejumlah').empty();
+
+        if (satwa.trim() === '') {
+            $('#errorMessagesatwa').append('Satwa tidak boleh kosong!<br>');
+            errorCount += 1;
+        }
+
+        if (tahun.trim() === '') {
+            $('#errorMessagetahun').append('Tahun tidak boleh kosong!<br>');
+            errorCount += 1;
+        } else {
+            if (tahun < 1980 || tahun > currentYear) {
+                // alert("Tahun harus di antara 1980 dan " + currentYear);
+                // var currentYear = new Date().getFullYear();
+                $('#errorMessagetahun').append('Tahun harus di antara 1980 dan ' + currentYear + '!<br>');
+
+                errorCount += 1;
+            }
+        }
 
 
 
-    // $('#form-data').validate({ // initialize plugin
-    //     highlight: function(label) {
-    //         $(label).closest('.form-group').removeClass('has-success').addClass('has-error');
-    //         //$('.error').css({'font-size':'9px','margin-bottom':'0px'});
-    //         $('#status-error').css({
-    //             'font-size': '6px'
-    //         });
-    //     },
-    //     success: function(label) {
-    //         $(label).closest('.form-group').removeClass('has-error');
-    //         label.remove();
-    //     },
-    //     errorPlacement: function(error, element) {
-    //         var placement = element.closest('.input-group');
-    //         if (!placement.get(0)) {
-    //             placement = element;
-    //         }
-    //         if (error.text() !== '') {
-    //             placement.after(error);
-    //         }
-    //     },
-
-    //     rules: {
-    //         nosk: {
-    //             required: true
-    //         },
-    //         pemilik: {
-    //             required: true,
-    //         },
-    //         alamat: {
-    //             required: true,
-    //         },
-
-    //         tglawal_berlaku: {
-    //             required: true,
-    //         },
-    //         tglakhir_berlaku: {
-    //             required: true,
-    //         }
-    //     }
-    // });
+        if (jumlah.trim() === '') {
+            $('#errorMessagejumlah').append('jumlah tidak boleh kosong!<br>');
+            errorCount += 1;
+        }
+        return errorCount
+    }
 </script>

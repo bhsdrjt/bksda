@@ -11,10 +11,14 @@
 <h3>Data Lembaga Konservasi</h3>
 <div class="row">
     <div class="col-md-12">
-        <?php pesan_get('msg', "Berhasil Menambahkan Lembaga Konservasi", "Gagal Menambahkan Lembaga konservasi","Berhasil Hapus Data","Gagal Hapus Data") ?>
-        <?php pesan_get('msg2',"Berhasil Hapus Data","Gagal Hapus Data") ?>
-        <a href="<?php echo base_url("app/lemkontambah") ?>" style="margin: 5px 0 10px 0px" class="btn  btn-primary tambah   btn-icon icon-left">
-            <i class="fa fa-plus"></i> Tambah Data Lembaga Konservasi</a>
+        <?php pesan_get('msg', "Berhasil Menambahkan Lembaga Konservasi", "Gagal Menambahkan Lembaga konservasi", "Berhasil Hapus Data", "Gagal Hapus Data") ?>
+        <?php pesan_get('msg2', "Berhasil Hapus Data", "Gagal Hapus Data") ?>
+        <?php if ($this->session->userdata("nama") != 'Tamu') { // Gantikan "logged_in()" dengan fungsi yang sesuai untuk memeriksa apakah pengguna sudah login 
+        ?>
+            <a href="<?php echo base_url("app/lemkontambah") ?>" style="margin: 5px 0 10px 0px" class="btn btn-primary tambah btn-icon icon-left">
+                <i class="fa fa-plus"></i> Tambah Data Lembaga Konservasi
+            </a>
+        <?php } ?>
         <table class="table table-bordered datatable" id="table-1" style="font-size:12px">
             <thead>
                 <tr>
@@ -41,22 +45,26 @@
 
                     $i++;
                     echo "
-							<tr>
-								
-                                <td>" . $i . "</td>
-                                <td>" . $row['nosk'] . "</td>
-                                <td><b>" . $tglawal . '</b> sampai <b>' . $tglakhir . "</b></td>
+                    <tr>
+                        <td>" . $i . "</td>
+                        <td>" . $row['nosk'] . "</td>
+                        <td><b>" . $tglawal . '</b> sampai <b>' . $tglakhir . "</b></td>
+                        <td>" . $row['pemilik'] . "</td>
+                        <td class='text-center'>
+                            <div>
+                                <a href='" . base_url("app/lemkonlihat?id=" . $row['id'] . "") . "' class='btn btn-default lihat' title='Lihat' id='" . $row['id'] . "'><i class='fa fa-eye'></i> Lihat</a>";
+                                if ($this->session->userdata("nama") != 'Tamu') {
+                                    echo "
+                                        <a href='" . base_url("app/lemkonedit?id=" . $row['id'] . "") . "' class='btn btn-primary edit' title='Edit' id='" . $row['id'] . "' ><i class='fa fa-edit' id='" . $row['id'] . "'></i> Edit</a>
+                                        <a href='#' class='btn btn-danger hapus' title='Hapus' id='" . $row['id'] . "'><i class='fa fa-trash-o'></i> Hapus</a>
+                                    ";
+                                }
 
-                                <td>" . $row['pemilik'] . "</td>
-                                <td>
-                                    <div>
-                                    <a href='" . base_url("app/lemkonlihat?id=" . $row['id'] . "") . "' class='btn btn-default  lihat' title='Lihat' id='" . $row['id'] . "'><i class='fa fa-eye'></i> Lihat</a>
-                                    <a href='" . base_url("app/lemkonedit?id=" . $row['id'] . "") . "' class='btn btn-primary edit' title='Edit' id='" . $row['id'] . "' ><i class='fa fa-edit' id='" . $row['id'] . "'></i> Edit</a>
-									<a href='#' class='btn btn-danger  hapus' title='Hapus' id='" . $row['id'] . "'><i class='fa fa-trash-o'></i> Hapus</a>
-                                    </div>
-								</td>
-							</tr>
-						";
+                    echo "
+                            </div>
+                        </td>
+                    </tr>
+                    ";
                 }
                 ?>
             </tbody>

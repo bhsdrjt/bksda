@@ -11,8 +11,11 @@
 <h3>Data Penangkar</h3>
 <div class="row">
     <div class="col-md-12">
+    <?php if ($this->session->userdata("nama") != 'Tamu') { // Gantikan "logged_in()" dengan fungsi yang sesuai untuk memeriksa apakah pengguna sudah login 
+        ?>
         <a href="<?php echo base_url("app/penangkartambah") ?>" style="margin: 5px 0 10px 0px" class="btn  btn-primary tambah   btn-icon icon-left">
             <i class="fa fa-plus"></i> Tambah Data Penangkar</a>
+            <?php } ?>
 
         <table class="table table-bordered datatable" id="table-1" style="font-size:12px">
             <thead>
@@ -49,16 +52,20 @@
 
                                 <td>" . $row['pemilik'] . "</td>
                                 <td>" . $row['jenis'] . "</td>
-                                <td>
-								<div>
-                                  <a href='" . base_url("app/penangkarlihat?id=" . $row['id'] . "") . "' class='btn btn-default  lihat' title='Lihat' id='" . $row['id'] . "'><i class='fa fa-eye'></i> Lihat</a>
-                                    <a href='" . base_url("app/penangkaredit?id=" . $row['id'] . "") . "' class='btn btn-primary edit' title='Edit' id='" . $row['id'] . "' ><i class='fa fa-edit' id='" . $row['id'] . "'></i> Edit</a>
-									<a href='#' class='btn btn-danger  hapus' title='Hapus' id='" . $row['id'] . "'><i class='fa fa-trash-o'></i> Hapus</a>
-								</div>
-                                
-								</td>
-							</tr>
-						";
+                                <td class='text-center'>
+                                    <div>
+                                        <a href='" . base_url("app/penangkarlihat?id=" . $row['id'] . "") . "' class='btn btn-default lihat' title='Lihat' id='" . $row['id'] . "'><i class='fa fa-eye'></i> Lihat</a>";
+                                        if ($this->session->userdata("nama") != 'Tamu') {
+                                            echo "
+                                                <a href='" . base_url("app/penangkaredit?id=" . $row['id'] . "") . "' class='btn btn-primary edit' title='Edit' id='" . $row['id'] . "' ><i class='fa fa-edit' id='" . $row['id'] . "'></i> Edit</a>
+                                                <a href='#' class='btn btn-danger hapus' title='Hapus' id='" . $row['id'] . "'><i class='fa fa-trash-o'></i> Hapus</a>
+                                            ";
+                                        }
+                            echo "
+                            </div>
+                        </td>
+                    </tr>
+                    ";
                 }
                 ?>
             </tbody>

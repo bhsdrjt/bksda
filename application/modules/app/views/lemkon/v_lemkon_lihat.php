@@ -48,7 +48,7 @@
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Nama Pemilik *</label>
                         <div class="col-lg-8">
-                            <p class="form-control-static"> : <?php echo $data['nama_pemilik'] ?></p>
+                            <p class="form-control-static"> : <?php echo $data['pemilik'] ?></p>
                         </div>
                     </div>
                     <div class="form-group">
