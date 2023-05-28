@@ -120,7 +120,7 @@
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Jenis *</label>
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" id="jenis" value="<?php echo $data['pemilik'] ?>" name="jenis" >
+                            <input type="text" class="form-control" id="jenis" value="<?php echo $data['jenis'] ?>" name="jenis">
                             <span id="errorMessagejenis" style="color: red;"></span>
                         </div>
                     </div>
