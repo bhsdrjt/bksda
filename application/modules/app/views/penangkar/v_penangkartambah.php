@@ -264,10 +264,9 @@
             errorCount += 1;
         }
 
-        if (errorCount !== 0) {
-            event.preventDefault(); // Menghentikan pengiriman form jika terdapat kesalahan validasi
-        } else {
-            $('#form').submit(); // Jika input valid, kirim form
+        if (errorCount > 0) {
+            event.preventDefault();
+            return
         }
     }
 </script>

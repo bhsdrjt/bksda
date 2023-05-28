@@ -136,7 +136,7 @@
                 <br>
                 <label class="col-md-2 control-label text-left">Detail Data </label>
                 <span id="errorMessagedetail" style="color: red;"></span>
-                
+
                 <table class="table table-bordered datatable" id="table-1">
                     <thead>
                         <tr>
@@ -166,7 +166,7 @@
                         </tr>
                     </tbody>
                 </table>
-                
+
             </div>
         </div>
 
@@ -235,19 +235,16 @@
             var jumlah = $("#jumlah").val();
 
             var error = validateDetail()
-            if (error >= 0) {
+            if (error > 0) {
                 return;
+            } else {
+
+                $table1.DataTable().row.add([satwa, tahun, '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jumlah + '">', '<button type="button" class="btn btn-danger hapus">Hapus</button>']).draw(false);
+                // Reset form
+                $("#satwa").val("");
+                $("#tahun").val("");
+                $("#jumlah").val("");
             }
-
-            // Validasi tahun
-
-
-            $table1.DataTable().row.add([satwa, tahun, '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jumlah + '">', '<button type="button" class="btn btn-danger hapus">Hapus</button>']).draw(false);
-
-            // Reset form
-            $("#satwa").val("");
-            $("#tahun").val("");
-            $("#jumlah").val("");
         });
 
         jQuery('#tombol-simpan').click(function(event) {
@@ -316,8 +313,7 @@
 
     // menambahkan event listener untuk setiap elemen input
     for (var i = 0; i < inputs.length; i++) {
-        inputs[i].addEventListener("input", function() {
-        });
+        inputs[i].addEventListener("input", function() {});
     }
 
     function inputAngka(evt) {
@@ -368,7 +364,7 @@
             $('#errorMessageakhir').append('Masa berlaku - Tanggal Akhir tidak boleh kosong!<br>');
             errorCount += 1;
         }
-        if ($table.find('tbody tr:gt(0)').length < 1){
+        if ($table.find('tbody tr:gt(0)').length < 1) {
             $('#errorMessagedetail').append('Detail tidak boleh kosong!<br>');
             errorCount += 1;
             // alert('oyyy')
@@ -381,7 +377,7 @@
 
     function validateDetail() {
         let errorCount = 0;
-        let satwa = $('#satwa').val();
+        let satwa = tinymce.get('satwa').getContent();
         let tahun = $('#tahun').val();
         let jumlah = $('#jumlah').val();
         let currentYear = new Date().getFullYear();
@@ -407,8 +403,6 @@
                 errorCount += 1;
             }
         }
-
-
 
         if (jumlah.trim() === '') {
             $('#errorMessagejumlah').append('jumlah tidak boleh kosong!<br>');

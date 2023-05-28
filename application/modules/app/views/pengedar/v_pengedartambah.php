@@ -40,7 +40,7 @@
 
     <div class="panel-body">
         <?php pesan_get('msg', "Berhasil Menambahkan Satwa", "Gagal Menambahkan Satwa") ?>
-        <form role="form" class="form-horizontal validate" action="<?php echo base_url() ?>app/pengedartambah" method="post" enctype="multipart/form-data" id="form" onsubmit="validateForm(event)">
+        <form role="form" class="form-horizontal validate" action="<?php echo base_url() ?>app/pengedartambah" method="post" enctype="multipart/form-data" id="form" onsubmit="validateForm(event)" >
             <div class="row">
                 <div class="col-md-6">
                     <input type="hidden" name="<?= $csrf['name'] ?>" value="<?= $csrf['hash'] ?>">
@@ -201,6 +201,9 @@
 
 
     function validateForm(event) {
+        
+        // event.preventDefault();
+
         var errorCount = 0;
         var nosk = $('#nosk').val();
         var pemilik = $('#pemilik').val();
@@ -243,12 +246,9 @@
             errorCount += 1;
         }
 
-        if (errorCount !== 0) {
+        if (errorCount > 0) {
             event.preventDefault();
-            // alert(errorCount) // Menghentikan pengiriman form jika terdapat kesalahan validasi
-        } else {
-            // alert(errorCount)
-            $('#form').submit(); // Jika input valid, kirim form
+            return
         }
     }
 </script>
