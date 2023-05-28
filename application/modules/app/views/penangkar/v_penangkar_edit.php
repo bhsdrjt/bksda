@@ -120,7 +120,7 @@
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Jenis *</label>
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" id="jenis" value="<?php echo $data['pemilik'] ?>" name="jenis" value="" style="font-weight:bold; font-style:italic;">
+                            <input type="text" class="form-control" id="jenis" value="<?php echo $data['pemilik'] ?>" name="jenis" >
                             <span id="errorMessagejenis" style="color: red;"></span>
                         </div>
                     </div>
@@ -279,10 +279,9 @@
             errorCount += 1;
         }
 
-        if (errorCount !== 0) {
-            event.preventDefault(); // Menghentikan pengiriman form jika terdapat kesalahan validasi
-        } else {
-            $('#form').submit(); // Jika input valid, kirim form
+        if (errorCount > 0) {
+            event.preventDefault();
+            return
         }
     }
 </script>

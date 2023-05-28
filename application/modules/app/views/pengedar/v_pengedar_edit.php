@@ -102,7 +102,7 @@
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Jenis Komoditi*</label>
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" id="jenis_komoditi" name="jenis_komoditi" value="<?php echo $data['jenis_komoditi']; ?>" style="font-weight:bold; font-style:italic;">
+                            <input type="text" class="form-control" id="jenis_komoditi" name="jenis_komoditi" value="<?php echo $data['jenis_komoditi']; ?>" >
                             <span id="errorMessagejenis_komoditi" style="color: red;"></span>
                         </div>
                     </div>
@@ -232,12 +232,9 @@
             errorCount += 1;
         }
 
-        if (errorCount !== 0) {
+        if (errorCount > 0) {
             event.preventDefault();
-            // alert(errorCount) // Menghentikan pengiriman form jika terdapat kesalahan validasi
-        } else {
-            // alert(errorCount)
-            $('#form').submit(); // Jika input valid, kirim form
+            return
         }
     }
 </script>
