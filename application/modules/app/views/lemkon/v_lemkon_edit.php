@@ -450,7 +450,7 @@
 
     function validateDetail() {
         let errorCount = 0;
-        let satwa = $('#satwa').val();
+        let satwa = tinymce.get('satwa').getContent();
         let tahun = $('#tahun').val();
         let jumlah = $('#jumlah').val();
         let currentYear = new Date().getFullYear();
