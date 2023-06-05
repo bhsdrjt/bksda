@@ -238,7 +238,7 @@
 
 
             var error = validateDetail()
-            alert(error)
+            // alert(error)
             if (error > 0) {
                 return;
             }
