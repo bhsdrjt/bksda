@@ -13,13 +13,17 @@ class M_pengedar extends CI_Model
         $this->db->where("app_pengedar.id", $id);
         return $this->db->get('app_pengedar');
     }
-
-
-
+    function getdataPemilik()
+    {
+        $this->db->select("app_pengedar.pemilik, app_pengedar.id");
+        $this->db->order_by('id', 'asc');
+        $this->db->where('app_pengedar.pemilik != ""');
+        return $this->db->get('app_pengedar');
+    }
     function lihatdata()
     {
         $this->db->select("app_pengedar.*");
-        $this->db->order_by('id', 'desc');
+        $this->db->order_by('id', 'asc');
         return $this->db->get('app_pengedar');
     }
     function cekdata($id)

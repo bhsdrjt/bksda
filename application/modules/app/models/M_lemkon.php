@@ -24,12 +24,18 @@ class M_lemkon extends CI_Model
         return $this->db->get();
     }
 
-
+    function getdataPemilik()
+    {
+        $this->db->select("app_lemkon.pemilik, app_lemkon.id ");
+        $this->db->order_by('id', 'asc');
+        $this->db->where('app_lemkon.pemilik != ""');
+        return $this->db->get('app_lemkon');
+    }
 
     function lihatdata()
     {
         $this->db->select("app_lemkon.*");
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('id', 'asc');
         return $this->db->get('app_lemkon');
     }
 

@@ -19,6 +19,7 @@ class App extends CI_Controller
         $this->load->model("m_penangkar");
         $this->load->model("m_pengedar");
         $this->load->model("m_lemkon");
+        $this->load->model("m_izinTsl");
     }
 
     // Dashboard
@@ -1994,7 +1995,7 @@ class App extends CI_Controller
         $variabel['csrf'] = csrf();
         if ($this->input->post()) {
             $id = $this->input->post('id');
-            
+
 
             $array = array(
                 'nosk' => $this->input->post('nosk'),
@@ -2315,5 +2316,136 @@ class App extends CI_Controller
         } else {
             redirect(base_url("app/lemkon"));
         }
+    }
+
+    public function izinTsl()
+    {
+        $variabel['csrf'] = csrf();
+        $variabel['data'] = $this->m_izinTsl->lihatdata();
+        // var_dump( $variabel['data']);exit;
+        $this->layout->render('izinTsl/v_izinTsl', $variabel);
+    }
+    public function izinTsltambah()
+    {
+        $variabel['csrf'] = csrf();
+        if ($this->input->post()) {
+            // var_dump($this->input->post());
+            $array = array(
+                'jenis' => $this->input->post('jenis'),
+                'id_reff' => $this->input->post('pemilik'),
+                'waktu_pendataan' => tanggalawal($this->input->post('waktu_pendataan')),
+                'kelas_satwa' => $this->input->post('kelas_satwa'),
+                'jumlah' => $this->input->post('jumlah'),
+                'keterangan' => $this->input->post('keterangan')
+            );
+            // var_dump($array);
+            $exec = $this->m_izinTsl->tambahdata($array);
+            if ($exec) {
+                redirect(base_url("app/izinTsl?msg=1"));
+            } else redirect(base_url("app/izinTsl?msg=0"));
+        } else {
+            $this->layout->render('izinTsl/v_izinTsltambah', $variabel);
+        }
+    }
+
+    public function izinTsledit()
+    {
+        $variabel['csrf'] = csrf();
+        if ($this->input->post()) {
+            $id = $this->input->post('id');
+            $array = array(
+                'jenis' => $this->input->post('jenis'),
+                'id_reff' => $this->input->post('pemilik'),
+                'waktu_pendataan' => tanggalawal($this->input->post('waktu_pendataan')),
+                'kelas_satwa' => $this->input->post('kelas_satwa'),
+                'jumlah' => $this->input->post('jumlah'),
+                'keterangan' => $this->input->post('keterangan')
+            );
+            // var_dump($id);exit;
+            $exec = $this->m_izinTsl->editdata($id, $array);
+
+            if ($exec) redirect(base_url("app/izinTsledit?id=" . $id . "&msg=1"));
+            else redirect(base_url("app/izinTsledit?id=" . $id . "&msg=0"));
+        } else {
+            $id = $this->input->get("id");
+            $exec = $this->m_izinTsl->lihatdatasatu($id);
+            // var_dump($exec);exit;
+
+            if ($exec->num_rows() > 0) {
+                $variabel['data'] = $exec->row_array();
+                $this->layout->render('izinTsl/v_izinTsl_edit', $variabel);
+            } else {
+                redirect(base_url("app/izinTsl"));
+            }
+        }
+    }
+
+
+
+    public function izinTslhapus()
+    {
+        $id = $this->input->get("id");
+        $exec = $this->m_izinTsl->hapus($id);
+        redirect(base_url() . "app/izinTsl?msg=0");
+    }
+
+    public function getPemilik()
+    {
+        $jenis = $this->input->get('jenis');
+
+        if ($jenis == 'penangkar') {
+            $result = $this->m_penangkar->getdataPemilik();
+        } elseif ($jenis == 'pengedar') {
+            $result = $this->m_pengedar->getdataPemilik();
+        } else {
+            $result = $this->m_lemkon->getdataPemilik();
+        }
+        $data = $result->result(); // Mengambil hasil query dalam bentuk array
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($data));
+
+        // $this->output
+    }
+
+    public function lihatTsl()
+    {
+        $variabel['csrf'] = csrf();
+        $username = $this->session->userdata("username");
+        $rule = $this->session->userdata("rule");
+        // var_dump($rule);
+        if ($rule == "user") {
+            $variabel['rule'] = $rule;
+            $variabel['data'] = $this->m_laporan->lihatdatauser($username);
+            $this->layout->render('laporanlihat/v_laporanlihatuser', $variabel);
+        } else {
+            if ($this->input->post()) {
+                $this->input->post('jenis') == "" ? $jenis = "null" : $jenis = "'" . $this->input->post('jenis') . "'";
+                $this->input->post('pemilik') == "" ? $id_reff = "null" : $id_reff = "'" . $this->input->post('pemilik') . "'";
+                $variabel['jenis'] =  $this->input->post('jenis');
+                $variabel['id_reff'] =  $this->input->post('pemilik');
+                $variabel['exportxls'] = "" . base_url() . "app/exportxlsTsl?jenis=" . $jenis . "&id_reff=" . $id_reff . "";
+            } else {
+                $jenis = "null";
+                $id_reff = "null";
+                $variabel['jenis'] = "";
+                $variabel['id_reff'] =  "";
+                $variabel['exportxls'] = "" . base_url() . "app/exportxlsTsl?jenis=" . $jenis . "&id_reff=" . $id_reff . "";
+            }
+            $variabel['data'] = $this->m_izinTsl->lihatdatafilter($jenis, $id_reff);
+            
+        }
+        $this->layout->render('izinTsl/v_lihatTsl',$variabel);
+    }
+
+    public function exportxlsTsl()
+    {
+        $this->input->get('jenis') ? $jenis  = $this->input->get('jenis') : $jenis  = "null";
+        $this->input->get('id_reff') ? $id_reff  = $this->input->get('id_reff') : $id_reff  = "null";
+        $variabel['data'] = $this->m_izinTsl->lihatdatafilter($jenis, $id_reff);
+        $variabel['jenis'] = str_replace("'", "", $jenis);
+        $variabel['id_reff'] = str_replace("'", "", $id_reff);
+        $this->load->view('izinTsl/v_laporanTsl', $variabel);
     }
 }

@@ -243,30 +243,46 @@
             minimumResultsForSearch: -1
         });
 
+
         $("#simpan").click(function() {
             var $table1 = jQuery('#table-1');
-            var satwa = $("#satwa").val();
-            var tahun = parseInt($("#tahun").val()); // Parse ke integer
+            var satwa = tinymce.get('satwa').getContent();
+            var tahun = parseInt($("#tahun").val());
             var jumlah = $("#jumlah").val();
-
-
 
             var error = validateDetail()
             if (error >= 0) {
                 return;
             }
 
-            $table1.DataTable().row.add([
-                satwa,
-                tahun,
-                '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jumlah + '">',
-                '<button type="button" class="btn btn-danger hapus">Hapus</button>'
-            ]).draw(false);
+            // Manipulasi konten
+            satwa = satwa.replace(/<p>/g, '').replace(/<\/p>/g, ''); // Menghapus tag <p>
+            satwa = satwa.replace(/<strong>/g, '<b>').replace(/<\/strong>/g, '</b>'); // Mengganti tag <strong> dengan <b>
+            satwa = satwa.replace(/<em>/g, '<i>').replace(/<\/em>/g, '</i>'); // Mengganti tag <em> dengan <i>
 
-            // Reset form
-            $("#satwa").val("");
-            $("#tahun").val("");
-            $("#jumlah").val("");
+
+            jQuery('#table-1').DataTable().row.add([satwa, tahun, '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jumlah + '">', '<button type="button" class="btn btn-danger hapus">Hapus</button>']).draw(false);
+
+            // Simpan konten TinyMCE sebelum menghapus
+
+
+            // // Reset form
+            tinymce.remove('#satwa')
+            tinymce.init({
+                selector: '#satwa',
+                menubar: false,
+                toolbar: 'bold italic',
+                statusbar: false,
+                height: 100,
+                fontsize_formats: '6px 8px 10px'
+            });
+            tinymce.get('satwa').setContent('');
+            $("#tahun").val('');
+            $("#jumlah").val('');
+
+
+            // Hapus dan inisialisasi kembali TinyMCE pada elemen "satwa"
+
         });
 
         jQuery('#tombol-simpan').click(function(event) {

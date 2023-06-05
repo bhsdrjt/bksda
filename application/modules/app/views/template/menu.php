@@ -75,6 +75,43 @@
 						<span class="title">Lihat Laporan </span>
 					</a>
 				</li>
+				<li  class="<?= ($submenu == "izinTsl" || $submenu == "izinTsltambah"  || $submenu == "izinTsledit"  ||$submenu == "penangkar" || $submenu == "penangkartambah"  || $submenu == "penangkaredit" || $submenu == "penangkarlihat"||$submenu == "pengedar" || $submenu == "pengedartambah"  || $submenu == "pengedaredit" || $submenu == "pengedarlihat" ||$submenu == "lemkon" || $submenu == "lemkontambah"  || $submenu == "lemkonedit" || $submenu == "lemkonlihat" ) ? "opened active root-level" : ""; ?> has-sub ">
+					<!-- <a href="<?php echo base_url() ?>app/satwa">
+						<i class="fa  fa-paw"></i>
+						<span class="title">Pendataan Satwa </span>
+					</a> -->
+					<a href="">
+						<i class="fa fa-star"></i>
+						<span class="title">Input Izin TSL</span>
+					</a>
+					<ul>
+						<li  class="<?= ($submenu == "izinTsl" || $submenu == "izinTsltambah"  || $submenu == "izinTsledit" ) ? " active" : ""; ?>">
+							<a href="<?php echo base_url() ?>app/izinTsl" >
+								<span class="title"> Update Izin TSL </span>
+							</a>
+						</li>
+						<li  class="<?= ($submenu == "lihatTsl") ? " active" : ""; ?>">
+							<a href="<?php echo base_url() ?>app/lihatTsl" >
+								<span class="title"> Lihat Izin TSL </span>
+							</a>
+						</li>
+						<li  class="<?= ($submenu == "penangkar" || $submenu == "penangkartambah"  || $submenu == "penangkaredit" || $submenu == "penangkarlihat") ? " active" : ""; ?>">
+							<a href="<?php echo base_url() ?>app/penangkar">
+								<span class="title">Penangkar</span>
+							</a>
+						</li>
+						<li  class="<?= ($submenu == "pengedar" || $submenu == "pengedartambah"  || $submenu == "pengedaredit" || $submenu == "pengedarlihat" ) ? " active" : ""; ?>">
+							<a href="<?php echo base_url() ?>app/pengedar">
+								<span class="title">Pengedar</span>
+							</a>
+						</li>
+						<li  class="<?= ($submenu == "lemkon" || $submenu == "lemkontambah"  || $submenu == "lemkonedit" || $submenu == "lemkonlihat") ? " active" : ""; ?>">
+							<a href="<?php echo base_url() ?>app/lemkon">
+								<span class="title">Lembaga Konservasi</span>
+							</a>
+						</li>
+					</ul>
+				</li>
 			
 				<li  class="<?= ($submenu == "eksplor" ||  $submenu == "kawasanlihat") ? "active root-level" : ""; ?> ">
 					<a href="<?php echo base_url() ?>app/eksplor">
@@ -118,38 +155,7 @@
 						<span class="title">User </span>
 					</a>
 				</li>
-				<li  class="<?= ($submenu == "satwa" || $submenu == "satwatambah"  || $submenu == "satwaedit" || $submenu == "satwalihat" ||$submenu == "penangkar" || $submenu == "penangkartambah"  || $submenu == "penangkaredit" || $submenu == "penangkarlihat"||$submenu == "pengedar" || $submenu == "pengedartambah"  || $submenu == "pengedaredit" || $submenu == "pengedarlihat" ||$submenu == "lemkon" || $submenu == "lemkontambah"  || $submenu == "lemkonedit" || $submenu == "lemkonlihat" ) ? "opened active root-level" : ""; ?> has-sub ">
-					<!-- <a href="<?php echo base_url() ?>app/satwa">
-						<i class="fa  fa-paw"></i>
-						<span class="title">Pendataan Satwa </span>
-					</a> -->
-					<a href="">
-						<i class="fa fa-star"></i>
-						<span class="title">Pendataan</span>
-					</a>
-					<ul>
-						<li  class="<?= ($submenu == "satwa" || $submenu == "satwatambah"  || $submenu == "satwaedit" || $submenu == "satwalihat" ) ? " active" : ""; ?>">
-							<a href="<?php echo base_url() ?>app/satwa">
-								<span class="title">Satwa</span>
-							</a>
-						</li>
-						<li  class="<?= ($submenu == "penangkar" || $submenu == "penangkartambah"  || $submenu == "penangkaredit" || $submenu == "penangkarlihat") ? " active" : ""; ?>">
-							<a href="<?php echo base_url() ?>app/penangkar">
-								<span class="title">Penangkar</span>
-							</a>
-						</li>
-						<li  class="<?= ($submenu == "pengedar" || $submenu == "pengedartambah"  || $submenu == "pengedaredit" || $submenu == "pengedarlihat" ) ? " active" : ""; ?>">
-							<a href="<?php echo base_url() ?>app/pengedar">
-								<span class="title">Pengedar</span>
-							</a>
-						</li>
-						<li  class="<?= ($submenu == "lemkon" || $submenu == "lemkontambah"  || $submenu == "lemkonedit" || $submenu == "lemkonlihat") ? " active" : ""; ?>">
-							<a href="<?php echo base_url() ?>app/lemkon">
-								<span class="title">Lembaga Konservasi</span>
-							</a>
-						</li>
-					</ul>
-				</li>
+				
 				<li  class="<?= ($submenu == "kee" || $submenu == "keetambah"  || $submenu == "keeedit" || $submenu == "keelihat" ) ? "active root-level" : ""; ?> ">
 					<a href="<?php echo base_url() ?>app/kee">
 						<i class="fa fa-image"></i>

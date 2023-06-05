@@ -16,15 +16,15 @@ if ($kategori == "null") {
     $i = 1;
 
     foreach ($data->result_array() as $row) {
-        echo '<tr><td style ="vertical-align: top;">' . $i . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['waktu'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . str_replace(array("\r", "\n"), '', $row['keterangan']);
-        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td style ="vertical-align: top;"></tr>';
+        echo '<tr><td style ="vertical-align: top;">' . $i . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['waktu'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . str_replace(array("\r", "\n"), '', $row['keterangan']). '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td></tr>';
         $i++;
     }
 } else if ($kategori == "PAL Batas Wilayah") {
@@ -33,18 +33,18 @@ if ($kategori == "null") {
     $i = 1;
 
     foreach ($data->result_array() as $row) {
-        echo '<tr><td style ="vertical-align: top;">' . $i . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['waktu'];
-        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data2'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data3'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td style ="vertical-align: top;"></tr>';
+        echo '<tr><td style ="vertical-align: top;">' . $i . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['waktu']. '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data2'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data3'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td></tr>';
         $i++;
     }
 } else if ($kategori == "Area Terbuka/Open Area") {
@@ -53,19 +53,19 @@ if ($kategori == "null") {
     $i = 1;
 
     foreach ($data->result_array() as $row) {
-        echo '<tr><td style ="vertical-align: top;">' . $i . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['waktu'];
-        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data2'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data3'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data4'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td style ="vertical-align: top;">';
+        echo '<tr><td style ="vertical-align: top;">' . $i . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['waktu']. '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data2'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data3'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data4'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td>';
         $i++;
     }
 } else if ($kategori == "Satwa Liar") {
@@ -74,22 +74,22 @@ if ($kategori == "null") {
     $i = 1;
 
     foreach ($data->result_array() as $row) {
-        echo '<tr><td style ="vertical-align: top;">' . $i . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['waktu'];
-        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data3'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data8'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data4'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data5'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data6'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data7'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td style ="vertical-align: top;"></tr>';
+        echo '<tr><td style ="vertical-align: top;">' . $i . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['waktu']. '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data3'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data8'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data4'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data5'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data6'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data7'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td></tr>';
         $i++;
     }
 } else if ($kategori == "Tumbuhan") {
@@ -98,19 +98,19 @@ if ($kategori == "null") {
     $i = 1;
 
     foreach ($data->result_array() as $row) {
-        echo '<tr><td style ="vertical-align: top;">' . $i . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['waktu'];
-        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data3'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data4'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data5'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td style ="vertical-align: top;"></tr>';
+        echo '<tr><td style ="vertical-align: top;">' . $i . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['waktu']. '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data3'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data4'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data5'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td></tr>';
         $i++;
     }
 } else if ($kategori == "Wisata Alam") {
@@ -119,16 +119,16 @@ if ($kategori == "null") {
     $i = 1;
 
     foreach ($data->result_array() as $row) {
-        echo '<tr><td style ="vertical-align: top;">' . $i . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['waktu'];
-        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td style ="vertical-align: top;"></tr>';
+        echo '<tr><td style ="vertical-align: top;">' . $i . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['waktu']. '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td></tr>';
         $i++;
     }
 } else if ($kategori == "Gangguan") {
@@ -137,16 +137,16 @@ if ($kategori == "null") {
     $i = 1;
 
     foreach ($data->result_array() as $row) {
-        echo '<tr><td style ="vertical-align: top;">' . $i . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['waktu'];
-        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td style ="vertical-align: top;"></tr>';
+        echo '<tr><td style ="vertical-align: top;">' . $i . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['waktu']. '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td></tr>';
         $i++;
     }
 } else if ($kategori == "Sosial Ekonomi") {
@@ -155,23 +155,23 @@ if ($kategori == "null") {
     $i = 1;
 
     foreach ($data->result_array() as $row) {
-        echo '<tr><td style ="vertical-align: top;">' . $i . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['waktu'];
-        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data2'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data3'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data4'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data5'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data6'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data7'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data8'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td style ="vertical-align: top;"></tr>';
+        echo '<tr><td style ="vertical-align: top;">' . $i . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['waktu']. '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data2'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data3'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data4'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data5'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data6'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data7'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data8'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td></tr>';
         $i++;
     }
 } else if ($kategori == "Pemberdayaan Masyarakat") {
@@ -180,21 +180,21 @@ if ($kategori == "null") {
     $i = 1;
 
     foreach ($data->result_array() as $row) {
-        echo '<tr><td style ="vertical-align: top;">' . $i . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['waktu'];
-        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data2'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data3'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data4'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data5'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['data6'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td style ="vertical-align: top;">';
-        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td style ="vertical-align: top;"></tr>';
+        echo '<tr><td style ="vertical-align: top;">' . $i . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kategori'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['namakawasan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['waktu']. '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['kegiatan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['lintang'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['bujur'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data1'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data2'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data3'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data4'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data5'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['data6'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['keterangan'] . '</td>';
+        echo '<td style ="vertical-align: top;">' . $row['validasi'] . '</td></tr>';
         $i++;
     }
 }

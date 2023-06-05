@@ -19,7 +19,14 @@ class M_penangkar extends CI_Model
     function lihatdata()
     {
         $this->db->select("app_penangkar.*");
-        $this->db->order_by('id', 'desc');
+        $this->db->order_by('id', 'asc');
+        return $this->db->get('app_penangkar');
+    }
+    function getdataPemilik()
+    {
+        $this->db->select("app_penangkar.pemilik, app_penangkar.id ");
+        $this->db->order_by('id', 'asc');
+        $this->db->where('app_penangkar.pemilik != ""');
         return $this->db->get('app_penangkar');
     }
     function cekdata($id)
