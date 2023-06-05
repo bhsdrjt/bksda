@@ -251,7 +251,7 @@
             var jumlah = $("#jumlah").val();
 
             var error = validateDetail()
-            if (error >= 0) {
+            if (error > 0) {
                 return;
             }
 
