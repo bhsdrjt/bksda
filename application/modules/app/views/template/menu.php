@@ -75,7 +75,7 @@
 						<span class="title">Lihat Laporan </span>
 					</a>
 				</li>
-				<li  class="<?= ($submenu == "izinTsl" || $submenu == "izinTsltambah"  || $submenu == "izinTsledit"  ||$submenu == "penangkar" || $submenu == "penangkartambah"  || $submenu == "penangkaredit" || $submenu == "penangkarlihat"||$submenu == "pengedar" || $submenu == "pengedartambah"  || $submenu == "pengedaredit" || $submenu == "pengedarlihat" ||$submenu == "lemkon" || $submenu == "lemkontambah"  || $submenu == "lemkonedit" || $submenu == "lemkonlihat" ) ? "opened active root-level" : ""; ?> has-sub ">
+				<li  class="<?= ($submenu == "izinTsl" || $submenu == "izinTsltambah"  || $submenu == "izinTsledit"  ||$submenu == "penangkar" || $submenu == "penangkartambah"  || $submenu == "penangkaredit" || $submenu == "penangkarlihat"||$submenu == "pengedar" || $submenu == "pengedartambah"  || $submenu == "pengedaredit" || $submenu == "pengedarlihat" ||$submenu == "lemkon" || $submenu == "lemkontambah"  || $submenu == "lemkonedit" || $submenu == "lemkonlihat" || $submenu == "lihatTsl") ? "opened active root-level" : ""; ?> has-sub ">
 					<!-- <a href="<?php echo base_url() ?>app/satwa">
 						<i class="fa  fa-paw"></i>
 						<span class="title">Pendataan Satwa </span>

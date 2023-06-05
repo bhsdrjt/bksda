@@ -30,11 +30,6 @@
 						<span class="title">Pendataan</span>
 					</a>
 					<ul>
-						<li  class="<?= ($submenu == "satwa" || $submenu == "satwatambah"  || $submenu == "satwaedit" || $submenu == "satwalihat" ) ? " active" : ""; ?>">
-							<a href="<?php echo base_url() ?>app/satwa">
-								<span class="title">Satwa</span>
-							</a>
-						</li>
 						<li  class="<?= ($submenu == "penangkar" || $submenu == "penangkartambah"  || $submenu == "penangkaredit" || $submenu == "penangkarlihat") ? " active" : ""; ?>">
 							<a href="<?php echo base_url() ?>app/penangkar">
 								<span class="title">Penangkar</span>

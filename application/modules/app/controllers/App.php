@@ -2412,31 +2412,21 @@ class App extends CI_Controller
     public function lihatTsl()
     {
         $variabel['csrf'] = csrf();
-        $username = $this->session->userdata("username");
-        $rule = $this->session->userdata("rule");
-        // var_dump($rule);
-        if ($rule == "user") {
-            $variabel['rule'] = $rule;
-            $variabel['data'] = $this->m_laporan->lihatdatauser($username);
-            $this->layout->render('laporanlihat/v_laporanlihatuser', $variabel);
+        if ($this->input->post()) {
+            $this->input->post('jenis') == "" ? $jenis = "null" : $jenis = "'" . $this->input->post('jenis') . "'";
+            $this->input->post('pemilik') == "" ? $id_reff = "null" : $id_reff = "'" . $this->input->post('pemilik') . "'";
+            $variabel['jenis'] =  $this->input->post('jenis');
+            $variabel['id_reff'] =  $this->input->post('pemilik');
+            $variabel['exportxls'] = "" . base_url() . "app/exportxlsTsl?jenis=" . $jenis . "&id_reff=" . $id_reff . "";
         } else {
-            if ($this->input->post()) {
-                $this->input->post('jenis') == "" ? $jenis = "null" : $jenis = "'" . $this->input->post('jenis') . "'";
-                $this->input->post('pemilik') == "" ? $id_reff = "null" : $id_reff = "'" . $this->input->post('pemilik') . "'";
-                $variabel['jenis'] =  $this->input->post('jenis');
-                $variabel['id_reff'] =  $this->input->post('pemilik');
-                $variabel['exportxls'] = "" . base_url() . "app/exportxlsTsl?jenis=" . $jenis . "&id_reff=" . $id_reff . "";
-            } else {
-                $jenis = "null";
-                $id_reff = "null";
-                $variabel['jenis'] = "";
-                $variabel['id_reff'] =  "";
-                $variabel['exportxls'] = "" . base_url() . "app/exportxlsTsl?jenis=" . $jenis . "&id_reff=" . $id_reff . "";
-            }
-            $variabel['data'] = $this->m_izinTsl->lihatdatafilter($jenis, $id_reff);
-            
+            $jenis = "null";
+            $id_reff = "null";
+            $variabel['jenis'] = "";
+            $variabel['id_reff'] =  "";
+            $variabel['exportxls'] = "" . base_url() . "app/exportxlsTsl?jenis=" . $jenis . "&id_reff=" . $id_reff . "";
         }
-        $this->layout->render('izinTsl/v_lihatTsl',$variabel);
+        $variabel['data'] = $this->m_izinTsl->lihatdatafilter($jenis, $id_reff);
+        $this->layout->render('izinTsl/v_lihatTsl', $variabel);
     }
 
     public function exportxlsTsl()
