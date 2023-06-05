@@ -453,7 +453,6 @@
         let satwa = tinymce.get('satwa').getContent();
         let tahun = $('#tahun').val();
         let jumlah = $('#jumlah').val();
-        let currentYear = new Date().getFullYear();
 
         $('#errorMessagesatwa').empty();
         $('#errorMessagetahun').empty();
@@ -467,15 +466,7 @@
         if (tahun.trim() === '') {
             $('#errorMessagetahun').append('Tahun tidak boleh kosong!<br>');
             errorCount += 1;
-        } else {
-            if (tahun < 1980 || tahun > currentYear) {
-                // alert("Tahun harus di antara 1980 dan " + currentYear);
-                // var currentYear = new Date().getFullYear();
-                $('#errorMessagetahun').append('Tahun harus di antara 1980 dan ' + currentYear + '!<br>');
-
-                errorCount += 1;
-            }
-        }
+        } 
 
 
 
