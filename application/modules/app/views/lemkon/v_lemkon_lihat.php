@@ -85,8 +85,6 @@
                             <p class="form-control-static"> : <?php echo $data['alamat'] ?></p>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Foto</label>
                         <div class="col-sm-8">
@@ -110,39 +108,36 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <?php
+                        $detail = json_decode($data['detail'], true);
+                        if (!empty($detail)) {
+                        ?>
+                            <table class="table" style="width: 50%;">
+                                <thead>
+                                    <tr>
+                                        <th>Satwa</th>
+                                        <th>Tahun</th>
+                                        <th>Jumlah</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($detail as $d) { ?>
+                                        <tr>
+                                            <td><?php echo $d['satwa']; ?></td>
+                                            <td><?php echo $d['tahun']; ?></td>
+                                            <td><?php echo $d['jumlah']; ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        <?php } ?>
+                    </div>
+                </div>
             </div>
         </form>
-        <div class="row">
-            <div class="col-md-12">
-                <br>
-                <label class="col-md-2 control-label text-left">Detail Data </label>
-                <table class="table table-bordered datatable" id="table-1">
-                    <thead>
-                        <tr>
-                            <th style="width: auto;">Satwa</th>
-                            <th>Tahun</th>
-                            <th>Jumlah</th>
-                        </tr>
-                    </thead>
-                    <tbody id="isi">
 
-                        <?php
-                        $detail  = json_decode($data['detail'], true);
-                        if (!empty($detail)) {
-                            foreach ($detail as $d) { ?>
-                                <tr>
-                                    <td id="satwa1"><?php echo $d['satwa'] ?> </td>
-                                    <td id="tahun1"><?php echo $d['tahun'] ?></td>
-                                    <td id="jumlah1"><?php echo $d['jumlah'] ?></td>
-                                </tr>
-                        <?php
-                            }
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
 
     </div>
