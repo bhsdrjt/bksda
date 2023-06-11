@@ -74,7 +74,7 @@ if ($jenis == 'pengedar') {
     }
     echo '</tr>';
 } else if ($jenis == 'lembaga konservasi') {
-    echo '<tr><th colspan="9">LAPORAN IZIN TSL ' . strtoupper($jenis) . ' </th></tr>';
+    echo '<tr><th colspan="12">LAPORAN IZIN TSL ' . strtoupper($jenis) . ' </th></tr>';
     echo '<tr><th style="vertical-align: top; width:50px">No</th><th style="vertical-align: top; width:250px">Pemilik</th><th style="vertical-align: top; width:150px">Waktu Pendataan</th><th style="vertical-align: top;width:150px">Kelas Satwa</th><th style="vertical-align: top;width:100px">Jumlah Saat Ini</th><th style="vertical-align: top; width:600px">Keterangan</th><th style="vertical-align: top; width:160px">No. SK</th><th style="vertical-align: top; width:150px">Alamat</th><th style="vertical-align: top; width:250px">Masa Berlaku</th><th style="vertical-align: top; width:150px">Satwa</th><th style="vertical-align: top; width:150px">Tahun</th><th style="vertical-align: top; width:150px">Jumlah</th></tr>';
     $i = 1;
     foreach ($data->result_array() as $row) {

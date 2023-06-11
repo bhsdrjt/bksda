@@ -33,7 +33,6 @@ $submenu = $this->router->fetch_method();
 			<span class="title">Izin TSL</span>
 		</a>
 		<ul>
-
 			<li class="<?= ($submenu == "penangkar" || $submenu == "penangkartambah"  || $submenu == "penangkaredit" || $submenu == "penangkarlihat") ? " active" : ""; ?>">
 				<a href="<?php echo base_url() ?>app/penangkar">
 					<span class="title">Penangkar</span>
