@@ -35,7 +35,7 @@ class M_lemkon extends CI_Model
     function lihatdata()
     {
         $this->db->select("app_lemkon.*");
-        $this->db->order_by('id', 'asc');
+        $this->db->order_by('id', 'desc');
         return $this->db->get('app_lemkon');
     }
 

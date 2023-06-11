@@ -22,9 +22,8 @@
                 <tr>
                     <th width='30px'>No</th>
                     <th>Nomor SK</th>
-                    <th>Masa Berlaku</th>
                     <th>Pemilik</th>
-                    <th>Jenis</th>
+                    <th>Masa Berlaku</th>
                     <th width="200px">Opsi</th>
                 </tr>
             </thead>
@@ -39,19 +38,14 @@
                     $tglawal = strftime('%d %B %Y', strtotime($datetime_tglawal->format('Y-m-d')));
                     $datetime_tglakhir = new DateTime($row['tglakhir_berlaku']);
                     $tglakhir = strftime('%d %B %Y', strtotime($datetime_tglakhir->format('Y-m-d')));
-
-
-
                     $i++;
                     echo "
 							<tr>
 								
                                 <td>" . $i . "</td>
                                 <td>" . $row['nosk'] . "</td>
-                                <td><b>" . $tglawal . '</b> sampai <b>' . $tglakhir . "</b></td>
-
                                 <td>" . $row['pemilik'] . "</td>
-                                <td>" . $row['jenis'] . "</td>
+                                <td><b>" . $tglawal . '</b> sampai <b>' . $tglakhir . "</b></td>
                                 <td class='text-center'>
                                     <div>
                                         <a href='" . base_url("app/penangkarlihat?id=" . $row['id'] . "") . "' class='btn btn-default lihat' title='Lihat' id='" . $row['id'] . "'><i class='fa fa-eye'></i> Lihat</a>";

@@ -186,7 +186,8 @@
 <script>
     jQuery(document).ready(function($) {
 
-        console.log("Before initializing TinyMCE");
+
+        // console.log("Before initializing TinyMCE");
         tinymce.init({
             selector: '#satwa',
             menubar: false,
@@ -195,7 +196,6 @@
             height: 100,
             fontsize_formats: '6px 8px 10px'
         });
-        console.log("After initializing TinyMCE");
         var csfrData = {};
         csfrData['<?php echo $this->security->get_csrf_token_name(); ?>'] = '<?php echo $this->security->get_csrf_hash(); ?>';
 
@@ -242,7 +242,7 @@
             if (error > 0) {
                 return;
             }
-            
+
             // Manipulasi konten
             satwa = satwa.replace(/<p>/g, '').replace(/<\/p>/g, ''); // Menghapus tag <p>
             satwa = satwa.replace(/<strong>/g, '<b>').replace(/<\/strong>/g, '</b>'); // Mengganti tag <strong> dengan <b>
@@ -269,9 +269,9 @@
             $("#jumlah").val('');
 
 
-            // Hapus dan inisialisasi kembali TinyMCE pada elemen "satwa"
-
         });
+
+
 
 
 
@@ -304,39 +304,32 @@
 
 
 
-        function __detaildata() {
-            var $table = jQuery('#table-1');
-            var detail = [];
+        
+        
+        
+    });
+    
+    function __detaildata() {
+        var $table = jQuery('#table-1');
+        var detail = [];
 
-            $table.find('tbody tr:gt(0)').each(function() {
-                var $row = jQuery(this);
+        $table.find('tbody tr:gt(0)').each(function() {
+            var $row = jQuery(this);
 
 
-                var satwa = $row.find('td:eq(0)').html(); // Get the trimmed text content of the first column
-                var tahun = $row.find('td:eq(1)').text().trim(); // Get the trimmed text content of the second column
-                var jumlah = parseInt($row.find('td:eq(2) input').val()); // Retrieve value from the input field
+            var satwa = $row.find('td:eq(0)').html(); // Get the trimmed text content of the first column
+            var tahun = $row.find('td:eq(1)').text().trim(); // Get the trimmed text content of the second column
+            var jumlah = parseInt($row.find('td:eq(2) input').val()); // Retrieve value from the input field
 
-                detail.push({
-                    satwa: satwa,
-                    tahun: tahun,
-                    jumlah: isNaN(jumlah) ? 0 : jumlah // Handle NaN values
-                });
+            detail.push({
+                satwa: satwa,
+                tahun: tahun,
+                jumlah: isNaN(jumlah) ? 0 : jumlah // Handle NaN values
             });
+        });
 
-            return detail;
-        }
-
-
-
-    });
-
-    $('#table-1 tbody').on('click', '.hapus', function() {
-        var $table1 = jQuery('#table-1');
-        $table1.DataTable()
-            .row($(this).parents('tr'))
-            .remove()
-            .draw(false);
-    });
+        return detail;
+    }
     var inputs = document.getElementsByClassName("angka");
 
     // menambahkan event listener untuk setiap elemen input
@@ -355,6 +348,24 @@
         return true;
 
     }
+
+    $('#table-1 tbody').on('click', '.hapus', function() {
+        // var $table1 = jQuery('#table-1');
+        tinymce.remove('#satwa')
+        jQuery('#table-1').DataTable()
+            .row($(this).parents('tr'))
+            .remove()
+            .draw(false);
+
+        tinymce.init({
+            selector: '#satwa',
+            menubar: false,
+            toolbar: 'bold italic',
+            statusbar: false,
+            height: 100,
+            fontsize_formats: '6px 8px 10px'
+        });
+    });
 
     function validateForm() {
         let errorCount = 0;
@@ -421,7 +432,7 @@
         if (tahun.trim() === '') {
             $('#errorMessagetahun').append('Tahun tidak boleh kosong!<br>');
             errorCount += 1;
-        } 
+        }
 
         if (jumlah.trim() === '') {
             $('#errorMessagejumlah').append('jumlah tidak boleh kosong!<br>');

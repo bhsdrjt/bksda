@@ -1938,17 +1938,18 @@ class App extends CI_Controller
     {
         $variabel['csrf'] = csrf();
         if ($this->input->post()) {
-
+            // var_dump($this->input->post());
             $array = array(
                 'nosk' => $this->input->post('nosk'),
                 'tglawal_berlaku' => tanggalawal($this->input->post('tglawal_berlaku')),
                 'tglakhir_berlaku' => tanggalawal($this->input->post('tglakhir_berlaku')),
                 'pemilik' => $this->input->post('pemilik'),
                 'alamat' => $this->input->post('alamat'),
-                'jenis' => str_replace(array("<em>", "</em>", "<p>", "</p>"), array("<i>", "</i>", "", ""), $this->input->post('jenis')),
-                'asal_usul' => $this->input->post('asal_usul'),
-                'jumlah_fo' => $this->input->post('jumlah_fo')
+                'asal_usul' => $this->input->post('asal_usul')
+                // 'reff' => 'penangkar'
             );
+            $arrayDetail = json_decode($this->input->post('detail'), true);
+            // var_dump($arrayDetail);exit;
             $config['upload_path'] = './assets/images/penangkar';
             $config['allowed_types'] = 'jpg|jpeg|JPG|JPEG|PNG|png|PDF|pdf|doc|DOC';
             $this->load->library('upload', $config);
@@ -1956,10 +1957,17 @@ class App extends CI_Controller
             $upload = $this->upload->data();
             $file = $upload["raw_name"] . $upload["file_ext"];
             $array['foto'] = $file;
-            $exec = $this->m_penangkar->tambahdata($array);
-            if ($exec) {
-                redirect(base_url("app/penangkar?msg=1"));
-            } else redirect(base_url("app/penangkar?msg=0"));
+            $exec = $this->m_penangkar->tambahdata($array, $arrayDetail);
+            // var_dump($exec);exit;
+            if ($exec['status']) {
+                $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(array('status' => true)));
+            } else {
+                $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(array('status' => false)));
+            }
         } else {
             $this->layout->render('penangkar/v_penangkartambah', $variabel);
         }
@@ -1992,22 +2000,20 @@ class App extends CI_Controller
     }
     public function penangkaredit()
     {
+        // var_dump($this->input->post());
         $variabel['csrf'] = csrf();
         if ($this->input->post()) {
             $id = $this->input->post('id');
-
-
             $array = array(
                 'nosk' => $this->input->post('nosk'),
                 'tglawal_berlaku' => tanggalawal($this->input->post('tglawal_berlaku')),
                 'tglakhir_berlaku' => tanggalawal($this->input->post('tglakhir_berlaku')),
                 'pemilik' => $this->input->post('pemilik'),
                 'alamat' => $this->input->post('alamat'),
-                'jenis' => str_replace(array("<em>", "</em>", "<p>", "</p>"), array("<i>", "</i>", "", ""), $this->input->post('jenis')),
                 'asal_usul' => $this->input->post('asal_usul'),
-                'jumlah_fo' => $this->input->post('jumlah_fo')
             );
-            // var_dump($array);exit;
+            $arrayDetail = json_decode($this->input->post('detail'), true);
+            $arrayDeleted = json_decode($this->input->post('id_deleted'), true);
             $config['upload_path'] = './assets/images/penangkar';
             $config['allowed_types'] = 'jpg|jpeg|JPG|JPEG|PNG|png';
             $this->load->library('upload', $config);
@@ -2034,9 +2040,16 @@ class App extends CI_Controller
                 $array['foto'] = "";
             }
 
-            $exec = $this->m_penangkar->editdata($id, $array);
-            if ($exec) redirect(base_url("app/penangkaredit?id=" . $id . "&msg=1"));
-            else redirect(base_url("app/penangkaredit?id=" . $id . "&msg=0"));
+            $exec = $this->m_penangkar->editdata($id, $array, $arrayDetail, $arrayDeleted);
+            if ($exec['status']) {
+                $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(array('status' => true)));
+            } else {
+                $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(array('status' => false)));
+            }
         } else {
             $id = $this->input->get("id");
             $exec = $this->m_penangkar->lihatdatasatu($id);
@@ -2046,6 +2059,7 @@ class App extends CI_Controller
             } else {
                 redirect(base_url("app/penangkar"));
             }
+            
         }
     }
 
@@ -2173,7 +2187,6 @@ class App extends CI_Controller
     {
         $variabel['csrf'] = csrf();
         $variabel['data'] = $this->m_lemkon->lihatdata();
-        // var_dump( $variabel['data']);exit;
         $this->layout->render('lemkon/v_lemkon', $variabel);
     }
     public function lemkontambah()
@@ -2269,13 +2282,8 @@ class App extends CI_Controller
             //     if ($exec) redirect(base_url("app/lemkonedit?id=" . $id . "&msg=1"));
             //     else redirect(base_url("app/lemkonedit?id=" . $id . "&msg=0"));
         } else {
-            // var_dump('cek');
-            // var_dump($this->input->post());exit;
             $id = $this->input->get("id");
-            // var_dump($id);
             $exec = $this->m_lemkon->lihatdatasatu($id);
-            // var_dump($exec->row_array());
-            // var_dump(json_decode($exec->row_array()['detail'],TRUE));exit;
             if ($exec->num_rows() > 0) {
                 $variabel['data'] = $exec->row_array();
                 $this->layout->render('lemkon/v_lemkon_edit', $variabel);
@@ -2413,27 +2421,29 @@ class App extends CI_Controller
     {
         $variabel['csrf'] = csrf();
         if ($this->input->post()) {
-            $this->input->post('jenis') == "" ? $jenis = "null" : $jenis = "'" . $this->input->post('jenis') . "'";
-            $this->input->post('pemilik') == "" ? $id_reff = "null" : $id_reff = "'" . $this->input->post('pemilik') . "'";
+            $this->input->post('jenis') == "" ? $jenis = null : $jenis = "" . $this->input->post('jenis') . "";
+            $this->input->post('pemilik') == "" ? $id_reff = null : $id_reff = "" . $this->input->post('pemilik') . "";
             $variabel['jenis'] =  $this->input->post('jenis');
             $variabel['id_reff'] =  $this->input->post('pemilik');
             $variabel['exportxls'] = "" . base_url() . "app/exportxlsTsl?jenis=" . $jenis . "&id_reff=" . $id_reff . "";
         } else {
-            $jenis = "null";
-            $id_reff = "null";
+            $jenis = null;
+            $id_reff = null;
             $variabel['jenis'] = "";
             $variabel['id_reff'] =  "";
             $variabel['exportxls'] = "" . base_url() . "app/exportxlsTsl?jenis=" . $jenis . "&id_reff=" . $id_reff . "";
         }
+        // var_dump($jenis, $id_reff);
         $variabel['data'] = $this->m_izinTsl->lihatdatafilter($jenis, $id_reff);
+        // var_dump($variabel['data']);exit;
         $this->layout->render('izinTsl/v_lihatTsl', $variabel);
     }
 
     public function exportxlsTsl()
     {
-        $this->input->get('jenis') ? $jenis  = $this->input->get('jenis') : $jenis  = "null";
-        $this->input->get('id_reff') ? $id_reff  = $this->input->get('id_reff') : $id_reff  = "null";
-        $variabel['data'] = $this->m_izinTsl->lihatdatafilter($jenis, $id_reff);
+        $this->input->get('jenis') ? $jenis  = $this->input->get('jenis') : $jenis  = null;
+        $this->input->get('id_reff') ? $id_reff  = $this->input->get('id_reff') : $id_reff  = null;
+        $variabel['data'] = $this->m_izinTsl->lihatdatafilterExport($jenis, $id_reff);
         $variabel['jenis'] = str_replace("'", "", $jenis);
         $variabel['id_reff'] = str_replace("'", "", $id_reff);
         $this->load->view('izinTsl/v_laporanTsl', $variabel);

@@ -199,17 +199,15 @@
 
 <script>
     var deletedRows = [];
-
-
-    tinymce.init({
-        selector: '#satwa',
-        menubar: false,
-        toolbar: 'bold italic',
-        statusbar: false,
-        height: 100,
-        fontsize_formats: '6px 8px 10px'
-    });
     jQuery(document).ready(function($) {
+        tinymce.init({
+            selector: '#satwa',
+            menubar: false,
+            toolbar: 'bold italic',
+            statusbar: false,
+            height: 100,
+            fontsize_formats: '6px 8px 10px'
+        });
         var csfrData = {};
         csfrData['<?php echo $this->security->get_csrf_token_name(); ?>'] = '<?php echo $this->security->get_csrf_hash(); ?>';
         $.ajaxSetup({
@@ -242,114 +240,115 @@
         $table1.closest('.dataTables_wrapper').find('select').select2({
             minimumResultsForSearch: -1
         });
+    });
+    // BATAS DOC READY
 
-
-        $("#simpan").click(function() {
-            var $table1 = jQuery('#table-1');
-            var satwa = tinymce.get('satwa').getContent();
-            var tahun = parseInt($("#tahun").val());
-            var jumlah = $("#jumlah").val();
-
-            var error = validateDetail()
-            if (error > 0) {
-                return;
-            }
-
-            // Manipulasi konten
-            satwa = satwa.replace(/<p>/g, '').replace(/<\/p>/g, ''); // Menghapus tag <p>
-            satwa = satwa.replace(/<strong>/g, '<b>').replace(/<\/strong>/g, '</b>'); // Mengganti tag <strong> dengan <b>
-            satwa = satwa.replace(/<em>/g, '<i>').replace(/<\/em>/g, '</i>'); // Mengganti tag <em> dengan <i>
-
-
-            jQuery('#table-1').DataTable().row.add([satwa, tahun, '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jumlah + '">', '<button type="button" class="btn btn-danger hapus">Hapus</button>']).draw(false);
-
-            // Simpan konten TinyMCE sebelum menghapus
-
-
-            // // Reset form
-            tinymce.remove('#satwa')
-            tinymce.init({
-                selector: '#satwa',
-                menubar: false,
-                toolbar: 'bold italic',
-                statusbar: false,
-                height: 100,
-                fontsize_formats: '6px 8px 10px'
-            });
-            tinymce.get('satwa').setContent('');
-            $("#tahun").val('');
-            $("#jumlah").val('');
-
-
-            // Hapus dan inisialisasi kembali TinyMCE pada elemen "satwa"
-
-        });
-
-        jQuery('#tombol-simpan').click(function(event) {
-            validateForm();
-            var formData = new FormData(document.getElementById('form-data'));
-            var formAction = jQuery('#form-data').attr('action');
-            var detail = __detaildata();
-            // console.log(detail)
-            // console.log(deletedRows)
-            // return false
-            formData.append('detail', JSON.stringify(detail));
-            formData.append('id_deleted', JSON.stringify(deletedRows));
-            jQuery.ajax({
-                url: formAction,
-                method: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    console.log(response);
-                    if (response) {
-                        window.location.href = "<?php echo base_url() ?>app/lemkonedit?id=<?= $data['id'] ?>&msg=1"
-                    } else {
-                        window.location.href = "<?php echo base_url() ?>app/lemkonedit?id=<?= $data['id'] ?> &msg=0"
-                    }
-
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(textStatus, errorThrown);
+    jQuery('#tombol-simpan').click(function(event) {
+        validateForm();
+        var formData = new FormData(document.getElementById('form-data'));
+        var formAction = jQuery('#form-data').attr('action');
+        var detail = __detaildata();
+        // console.log(detail)
+        // console.log(deletedRows)
+        // return false
+        formData.append('detail', JSON.stringify(detail));
+        formData.append('id_deleted', JSON.stringify(deletedRows));
+        jQuery.ajax({
+            url: formAction,
+            method: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                console.log(response);
+                if (response) {
+                    window.location.href = "<?php echo base_url() ?>app/lemkonedit?id=<?= $data['id'] ?>&msg=1"
+                } else {
+                    window.location.href = "<?php echo base_url() ?>app/lemkonedit?id=<?= $data['id'] ?> &msg=0"
                 }
-            });
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus, errorThrown);
+            }
         });
+    });
 
-        function __detaildata() {
-            var $table = jQuery('#table-1');
-            var detail = [];
+    $("#simpan").click(function() {
+        var $table1 = jQuery('#table-1');
+        var satwa = tinymce.get('satwa').getContent();
+        var tahun = parseInt($("#tahun").val());
+        var jumlah = $("#jumlah").val();
 
-            $table.find('tbody tr:gt(0)').each(function() {
-                var $row = jQuery(this);
-                var id_detail = $row.find('#id_detail').val(); // Retrieve value from the hidden input field
-                id_detail = id_detail !== undefined ? parseInt(id_detail) : null;
-
-                var satwa = $row.find('td:eq(0)').html(); // Get the trimmed text content of the first column
-                var tahun = $row.find('td:eq(1)').text().trim(); // Get the trimmed text content of the second column
-                var jumlah = parseInt($row.find('td:eq(2) input').val()); // Retrieve value from the input field
-
-                detail.push({
-                    id_detail: id_detail,
-                    satwa: satwa,
-                    tahun: tahun,
-                    jumlah: isNaN(jumlah) ? 0 : jumlah // Handle NaN values
-                });
-            });
-
-            return detail;
+        var error = validateDetail()
+        if (error > 0) {
+            return;
         }
+
+        satwa = satwa.replace(/<p>/g, '').replace(/<\/p>/g, ''); // Menghapus tag <p>
+        satwa = satwa.replace(/<strong>/g, '<b>').replace(/<\/strong>/g, '</b>'); // Mengganti tag <strong> dengan <b>
+        satwa = satwa.replace(/<em>/g, '<i>').replace(/<\/em>/g, '</i>'); // Mengganti tag <em> dengan <i>
+
+        jQuery('#table-1').DataTable().row.add([satwa, tahun, '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jumlah + '">', '<button type="button" class="btn btn-danger hapus">Hapus</button>']).draw(false);
+
+        tinymce.remove('#satwa')
+        tinymce.init({
+            selector: '#satwa',
+            menubar: false,
+            toolbar: 'bold italic',
+            statusbar: false,
+            height: 100,
+            fontsize_formats: '6px 8px 10px'
+        });
+        tinymce.get('satwa').setContent('');
+        $("#tahun").val('');
+        $("#jumlah").val('');
 
 
     });
 
+    function __detaildata() {
+        var $table = jQuery('#table-1');
+        var detail = [];
+
+        $table.find('tbody tr:gt(0)').each(function() {
+            var $row = jQuery(this);
+            var id_detail = $row.find('#id_detail').val(); // Retrieve value from the hidden input field
+            id_detail = id_detail !== undefined ? parseInt(id_detail) : null;
+
+            var satwa = $row.find('td:eq(0)').html(); // Get the trimmed text content of the first column
+            var tahun = $row.find('td:eq(1)').text().trim(); // Get the trimmed text content of the second column
+            var jumlah = parseInt($row.find('td:eq(2) input').val()); // Retrieve value from the input field
+
+            detail.push({
+                id_detail: id_detail,
+                satwa: satwa,
+                tahun: tahun,
+                jumlah: isNaN(jumlah) ? 0 : jumlah // Handle NaN values
+            });
+        });
+
+        return detail;
+    }
+
     $('#table-1 tbody').on('click', '.hapus', function() {
-        var $table1 = jQuery('#table-1');
-        $table1.DataTable()
+        // var $table1 = jQuery('#table-1');
+        tinymce.remove('#satwa')
+        jQuery('#table-1').DataTable()
             .row($(this).parents('tr'))
             .remove()
             .draw(false);
+
+        tinymce.init({
+            selector: '#satwa',
+            menubar: false,
+            toolbar: 'bold italic',
+            statusbar: false,
+            height: 100,
+            fontsize_formats: '6px 8px 10px'
+        });
     });
+
     var inputs = document.getElementsByClassName("angka");
 
     // menambahkan event listener untuk setiap elemen input
@@ -466,7 +465,7 @@
         if (tahun.trim() === '') {
             $('#errorMessagetahun').append('Tahun tidak boleh kosong!<br>');
             errorCount += 1;
-        } 
+        }
 
 
 

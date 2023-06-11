@@ -39,17 +39,15 @@
                     $datetime_tglakhir = new DateTime($row['tglakhir_berlaku']);
                     $tglakhir = strftime('%d %B %Y', strtotime($datetime_tglakhir->format('Y-m-d')));
 
-
-
                     $i++;
                     echo "
 							<tr>
 								
                                 <td>" . $i . "</td>
                                 <td>" . $row['nosk'] . "</td>
+                                <td>" . $row['pemilik'] . "</td>
                                 <td><b>" . $tglawal . '</b> sampai <b>' . $tglakhir . "</b></td>
 
-                                <td>" . $row['pemilik'] . "</td>
                                 <td>" . $row['jenis_komoditi'] . "</td>
                                 
                                 <td class='text-center'>

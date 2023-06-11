@@ -53,21 +53,6 @@
                             <p class="form-control-static"> : <?php echo $data['alamat'] ?></p>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="col-lg-4 control-label">Jenis*</label>
-                        <div class="col-lg-8">
-                            <p class="form-control-static" > :<?php echo $data['jenis'] ?> </p>
-
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-lg-4 control-label">Jumlah*</label>
-                        <div class="col-lg-8">
-                            <p class="form-control-static"> : <?php echo $data['jumlah_fo'] ?></p>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Masa Berlaku</label>
                         <div class="col-lg-8">
@@ -80,26 +65,41 @@
                             <p class="form-control-static"> : <?php echo $data['asal_usul'] ?></p>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Foto</label>
                         <div class="col-sm-8">
-
-
-                            <img src="<?php echo base_url() . "assets/images/satwa/" . $data['foto'] ?>" class="thumbnail" style="max-width: 300px; height: 200px;" alt="...">
-
-
-
+                            <img src="<?php echo base_url() . "assets/images/penangkar/" . $data['foto'] ?>" class="thumbnail" style="max-width: 300px; height: 200px;" alt="...">
                         </div>
                     </div>
 
-
-
-
-
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <?php
+                        $detail = json_decode($data['detail'], true);
+                        if (!empty($detail)) {
+                        ?>
+                            <table class="table" style="width: 50%;">
+                                <thead>
+                                    <tr>
+                                        <th>Satwa</th>
+                                        <th>Jumlah</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($detail as $d) { ?>
+                                        <tr>
+                                            <td><?php echo $d['satwa']; ?></td>
+                                            <td><?php echo $d['jumlah']; ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        <?php } ?>
+                    </div>
+                </div>
+
+
             </div>
 
 
