@@ -44,7 +44,7 @@
 							<tr>
 								
                                 <td>" . $i . "</td>
-                                <td class='text-center'>" . $row['jenis'] . "</td>
+                                <td class='text-center'>" . ucfirst($row['jenis']) . "</td>
                                 <td>" . $row['pemilik'] . "</td>
                                 <td class='text-center'>" . $row['kelas_satwa'] . "</td>
                                 <td class='text-center'>" . $row['jumlah'] . "</td>

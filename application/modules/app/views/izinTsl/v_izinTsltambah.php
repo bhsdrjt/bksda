@@ -93,10 +93,10 @@
                         <div class="col-lg-8">
                             <select class="form-control" name="kelas_satwa" id="kelas_satwa">
                                 <option value="">-- Pilih Kelas Satwa --</option>
-                                <option value="mamalia">Mamalia</option>
-                                <option value="burung/aves">Burung/Aves</option>
-                                <option value="amfibi">Amfibi</option>
-                                <option value="reptile">Reptile</option>
+                                <option value="Mamalia">Mamalia</option>
+                                <option value="Burung/Aves">Burung/Aves</option>
+                                <option value="Amfibi">Amfibi</option>
+                                <option value="Reptile">Reptile</option>
                             </select>
                             <span id="errorMessagekelas_satwa" style="color: red;"></span>
                         </div>

@@ -99,10 +99,10 @@
                         <div class="col-lg-8">
                             <select class="form-control" name="kelas_satwa" id="kelas_satwa">
                                 <option value="">-- Pilih Kelas Satwa --</option>
-                                <option value="mamalia" <?php echo $data['kelas_satwa'] == 'mamalia' ? 'selected' : '' ?>>Mamalia</option>
-                                <option value="burung/aves" <?php echo $data['kelas_satwa'] == 'burung/aves' ? 'selected' : '' ?>>Burung/Aves</option>
-                                <option value="amfibi" <?php echo $data['kelas_satwa'] == 'amfibi' ? 'selected' : '' ?>>Amfibi</option>
-                                <option value="reptile" <?php echo $data['kelas_satwa'] == 'reptile' ? 'selected' : '' ?>>Reptile</option>
+                                <option value="Mamalia" <?php echo $data['kelas_satwa'] == 'Mamalia' ? 'selected' : '' ?>>Mamalia</option>
+                                <option value="Burung/Aves" <?php echo $data['kelas_satwa'] == 'Burung/Aves' ? 'selected' : '' ?>>Burung/Aves</option>
+                                <option value="Amfibi" <?php echo $data['kelas_satwa'] == 'Amfibi' ? 'selected' : '' ?>>Amfibi</option>
+                                <option value="Reptile" <?php echo $data['kelas_satwa'] == 'Reptile' ? 'selected' : '' ?>>Reptile</option>
                             </select>
                             <span id="errorMessagekelas_satwa" style="color: red;"></span>
                         </div>
