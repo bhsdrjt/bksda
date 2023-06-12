@@ -9,15 +9,17 @@ class M_izinTsl extends CI_Model
 
     function lihatdatasatu($id)
     {
-        $this->db->select("A.*, 
-        CASE A.jenis  
-            WHEN 'penangkar' THEN (SELECT B.pemilik FROM app_penangkar B WHERE B.id = A.id_reff) 
-            WHEN 'pengedar' THEN (SELECT C.pemilik FROM app_pengedar C WHERE C.id = A.id_reff) 
-            WHEN 'lembaga konservasi' THEN (SELECT D.pemilik FROM app_lemkon D WHERE D.id = A.id_reff) 
-        END AS pemilik");
-        $this->db->from('app_izin_tsl A');
-        $this->db->where("app_izin_tsl.id", $id);
-        return $this->db->get('app_izin_tsl');
+        
+        $this->db->select('it.*, COALESCE(pt.pemilik, pd.pemilik, lk.pemilik) AS pemilik');
+        $this->db->from('app_izin_tsl it');
+        $this->db->where('it.id', $id);
+        $this->db->join('app_penangkar pt', "it.jenis = 'penangkar' AND pt.id = it.id_reff", 'left');
+        $this->db->join('app_pengedar pd', "it.jenis = 'pengedar' AND pd.id = it.id_reff", 'left');
+        $this->db->join('app_lemkon lk', "it.jenis = 'lembaga konservasi' AND lk.id = it.id_reff", 'left');
+
+        return $this->db->get();
+        // $result = $query->result();
+
     }
 
 
@@ -31,7 +33,12 @@ class M_izinTsl extends CI_Model
         END AS pemilik");
         $this->db->from('app_izin_tsl A');
         $this->db->order_by('A.id', 'asc');
-        return $this->db->get();
+        $query = $this->db->get();
+        // $lastQuery = $this->db->last_query();
+
+        // echo $lastQuery;
+
+        return $query;
     }
 
 

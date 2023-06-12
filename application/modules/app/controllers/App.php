@@ -2229,8 +2229,6 @@ class App extends CI_Controller
     {
         $variabel['csrf'] = csrf();
         if ($this->input->post()) {
-            // var_dump('cek123');
-            // var_dump($this->input->post());exit;
             $id = $this->input->post('id');
             $array = array(
                 'nosk' => $this->input->post('nosk'),
@@ -2330,7 +2328,7 @@ class App extends CI_Controller
     {
         $variabel['csrf'] = csrf();
         $variabel['data'] = $this->m_izinTsl->lihatdata();
-        // var_dump( $variabel['data']);exit;
+        // var_dump( $variabel['data']->result());exit;
         $this->layout->render('izinTsl/v_izinTsl', $variabel);
     }
     public function izinTsltambah()
@@ -2359,8 +2357,9 @@ class App extends CI_Controller
     public function izinTsledit()
     {
         $variabel['csrf'] = csrf();
+        // var_dump($this->input->get('id'));exit;
         if ($this->input->post()) {
-            $id = $this->input->post('id');
+            $id = $this->input->get('id');
             $array = array(
                 'jenis' => $this->input->post('jenis'),
                 'id_reff' => $this->input->post('pemilik'),
@@ -2377,7 +2376,7 @@ class App extends CI_Controller
         } else {
             $id = $this->input->get("id");
             $exec = $this->m_izinTsl->lihatdatasatu($id);
-            // var_dump($exec);exit;
+            // var_dump($exec->result());exit;
 
             if ($exec->num_rows() > 0) {
                 $variabel['data'] = $exec->row_array();

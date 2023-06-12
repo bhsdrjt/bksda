@@ -39,17 +39,14 @@
                     setlocale(LC_TIME, 'id_ID');
                     $datetime_pendataan = new DateTime($row['waktu_pendataan']);
                     $pendataan = strftime('%d %B %Y', strtotime($datetime_pendataan->format('Y-m-d')));
-
-
-
                     $i++;
                     echo "
 							<tr>
 								
                                 <td>" . $i . "</td>
-                                <td class='text-center'>" . strtoupper($row['jenis']) . "</td>
-                                <td>" . strtoupper($row['pemilik']) . "</td>
-                                <td class='text-center'>" . strtoupper($row['kelas_satwa']) . "</td>
+                                <td class='text-center'>" . $row['jenis'] . "</td>
+                                <td>" . $row['pemilik'] . "</td>
+                                <td class='text-center'>" . $row['kelas_satwa'] . "</td>
                                 <td class='text-center'>" . $row['jumlah'] . "</td>
                                 <td class='text-center'>" . $pendataan ."</td>
                                 <td>" . $row['keterangan'] . "</td>
