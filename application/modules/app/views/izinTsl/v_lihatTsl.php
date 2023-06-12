@@ -91,7 +91,7 @@
 								
                                 <td>" . $i . "</td>
                         
-                                <td>" . $row['jenis'] . "</td>
+                                <td>" . ucfirst($row['jenis']) . "</td>
                                 <td>" . $row['pemilik'] . "</td>
                                 <td>" . tanggal($row['waktu_pendataan']) . "</td>
                                 <td>" . $row['kelas_satwa'] . "</td>
