@@ -20,12 +20,7 @@ $submenu = $this->router->fetch_method();
 			<span class="title">Eksplor Kawasan </span>
 		</a>
 	</li>
-	<li class="<?= ($submenu == "lihatTsl") ? " active" : ""; ?>">
-		<a href="<?php echo base_url() ?>app/lihatTsl">
-			<i class="fa fa-file"></i>
-			<span class="title"> Lihat Izin TSL </span>
-		</a>
-	</li>
+	
 
 	<li class="<?= ($submenu == "satwa" || $submenu == "satwatambah"  || $submenu == "satwaedit" || $submenu == "satwalihat" || $submenu == "penangkar" || $submenu == "penangkartambah"  || $submenu == "penangkaredit" || $submenu == "penangkarlihat" || $submenu == "pengedar" || $submenu == "pengedartambah"  || $submenu == "pengedaredit" || $submenu == "pengedarlihat" || $submenu == "lemkon" || $submenu == "lemkontambah"  || $submenu == "lemkonedit" || $submenu == "lemkonlihat") ? "opened active root-level" : ""; ?> has-sub ">
 		<a href="">
@@ -49,6 +44,12 @@ $submenu = $this->router->fetch_method();
 				</a>
 			</li>
 		</ul>
+	</li>
+	<li class="<?= ($submenu == "lihatTsl") ? " active" : ""; ?>">
+		<a href="<?php echo base_url() ?>app/lihatTsl">
+			<i class="fa fa-file"></i>
+			<span class="title"> Lihat Izin TSL </span>
+		</a>
 	</li>
 	<li class="">
 		<a href="<?php echo base_url() ?>app/login/logout">
