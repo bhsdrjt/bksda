@@ -2357,9 +2357,9 @@ class App extends CI_Controller
     public function izinTsledit()
     {
         $variabel['csrf'] = csrf();
-        // var_dump($this->input->get('id'));exit;
+        // var_dump($this->input->post());exit;
         if ($this->input->post()) {
-            $id = $this->input->get('id');
+            $id = $this->input->post('id');
             $array = array(
                 'jenis' => $this->input->post('jenis'),
                 'id_reff' => $this->input->post('pemilik'),
@@ -2368,7 +2368,7 @@ class App extends CI_Controller
                 'jumlah' => $this->input->post('jumlah'),
                 'keterangan' => $this->input->post('keterangan')
             );
-            // var_dump($id);exit;
+            // var_dump($id,$array);exit;
             $exec = $this->m_izinTsl->editdata($id, $array);
 
             if ($exec) redirect(base_url("app/izinTsledit?id=" . $id . "&msg=1"));

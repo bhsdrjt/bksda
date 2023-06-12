@@ -93,19 +93,26 @@ class M_izinTsl extends CI_Model
     function lihatdatafilterExport($jenis = 'null', $id_reff = 'null')
     {
         if ($jenis == 'penangkar') {
-            $this->db->select('A.*, B.pemilik , B.nosk, B.alamat , B.tglawal_berlaku, B.tglakhir_berlaku,
+            // Set the group_concat_max_len globally
+            $this->db->query("SET SESSION group_concat_max_len = 1000000");
+
+            // Build the query
+            $this->db->select('A.*, B.pemilik, B.nosk, B.alamat, B.tglawal_berlaku, B.tglakhir_berlaku,
                 (SELECT CONCAT(\'[\', GROUP_CONCAT(CONCAT(
                 \'{\"satwa\":\"\', REPLACE(C.satwa, \'\\"\', \'\\\\\\\"\'), \'\\",\',
-                \'\"jumlah\":\"\', REPLACE(C.jumlah, \'\\"\', \'\\\\\\\"\'), \'\"}\' )
-            ORDER BY C.id ASC SEPARATOR \',\'), \']\')
-            FROM app_penangkar_detail C WHERE C.id_header = B.id) as detail', FALSE);
+                \'\"jumlah\":\"\', REPLACE(C.jumlah, \'\\"\', \'\\\\\\\"\'), \'\"}\')
+                ORDER BY C.id ASC SEPARATOR \',\'), \']\')
+                FROM app_penangkar_detail C WHERE C.id_header = B.id) as detail', FALSE);
             $this->db->from('app_izin_tsl A');
             $this->db->where('A.jenis', 'penangkar');
             if ($id_reff) {
                 $this->db->where('A.id_reff', $id_reff);
             }
             $this->db->join('app_penangkar B', 'B.id = A.id_reff');
-            return $this->db->get();
+
+            // Execute the query
+            $query = $this->db->get();
+            return $query;
         } else if ($jenis == 'pengedar') {
             $this->db->select('A.*, B.pemilik , B.nosk, B.alamat , B.tglawal_berlaku, B.tglakhir_berlaku, B.jenis_komoditi, B.tentang_sk', FALSE);
             $this->db->from('app_izin_tsl A');
