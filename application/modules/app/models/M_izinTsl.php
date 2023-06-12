@@ -9,7 +9,6 @@ class M_izinTsl extends CI_Model
 
     function lihatdatasatu($id)
     {
-        
         $this->db->select('it.*, COALESCE(pt.pemilik, pd.pemilik, lk.pemilik) AS pemilik');
         $this->db->from('app_izin_tsl it');
         $this->db->where('it.id', $id);
@@ -117,19 +116,17 @@ class M_izinTsl extends CI_Model
             $this->db->join('app_pengedar B', 'B.id = A.id_reff');
             return $this->db->get();
         } else if ($jenis == 'lembaga konservasi') {
-            $this->db->select('A.*, B.pemilik , B.nosk, B.alamat , B.tglawal_berlaku, B.tglakhir_berlaku,  (SELECT CONCAT(\'[\', GROUP_CONCAT(CONCAT(
-                \'{\"satwa\":\"\', REPLACE(C.satwa, \'\\"\', \'\\\\\\\"\'), \'\\",\',
-                \'\"tahun\":\"\', REPLACE(C.tahun, \'\\"\', \'\\\\\\\"\'), \'\\",\',
-                \'\"jumlah\":\"\', REPLACE(C.jumlah, \'\\"\', \'\\\\\\\"\'), \'\"}\')
-            ORDER BY C.id ASC SEPARATOR \',\'), \']\')
-            FROM app_lemkon_detail C WHERE C.id_lembaga = B.id) as detail', FALSE);
+            $this->db->query('SET SESSION group_concat_max_len = 1000000');
+            $this->db->select('A.*, B.pemilik, B.nosk, B.alamat, B.tglawal_berlaku, B.tglakhir_berlaku');
+            $this->db->select('CAST((SELECT CONCAT(\'[\', GROUP_CONCAT(CONCAT(\'{\"satwa\":\"\', REPLACE(C.satwa, \'\\"\', \'\\\\\\\"\'), \'\\",\', \'\"tahun\":\"\', REPLACE(C.tahun, \'\\"\', \'\\\\\\\"\'), \'\\",\', \'\"jumlah\":\"\', REPLACE(C.jumlah, \'\\"\', \'\\\\\\\"\'), \'\"}\') ORDER BY C.id ASC SEPARATOR \',\'), \']\') FROM app_lemkon_detail C WHERE C.id_lembaga = B.id) AS CHAR) AS detail', FALSE);
             $this->db->from('app_izin_tsl A');
-            $this->db->where('A.jenis', 'lembaga konservasi');
-            if ($id_reff) {
-                $this->db->where('A.id_reff', $id_reff);
-            }
             $this->db->join('app_lemkon B', 'B.id = A.id_reff');
-            return $this->db->get();
+            $this->db->where('A.jenis', 'lembaga konservasi');
+            $this->db->where('A.id_reff', 46);
+            $query = $this->db->get();
+            // $lastQuery = $this->db->last_query();
+            // echo $lastQuery;
+            return $query;
         } else {
             $this->db->select("A.*, 
                 CASE A.jenis  
