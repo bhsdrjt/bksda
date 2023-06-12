@@ -122,7 +122,9 @@ class M_izinTsl extends CI_Model
             $this->db->from('app_izin_tsl A');
             $this->db->join('app_lemkon B', 'B.id = A.id_reff');
             $this->db->where('A.jenis', 'lembaga konservasi');
-            $this->db->where('A.id_reff', 46);
+            if ($id_reff) {
+                $this->db->where('A.id_reff', $id_reff);
+            }
             $query = $this->db->get();
             // $lastQuery = $this->db->last_query();
             // echo $lastQuery;
