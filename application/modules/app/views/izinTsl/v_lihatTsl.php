@@ -91,8 +91,8 @@
 								
                                 <td>" . $i . "</td>
                         
-                                <td>" . strtoupper($row['jenis']) . "</td>
-                                <td>" . strtoupper($row['pemilik']) . "</td>
+                                <td>" . $row['jenis'] . "</td>
+                                <td>" . $row['pemilik'] . "</td>
                                 <td>" . tanggal($row['waktu_pendataan']) . "</td>
                                 <td>" . $row['kelas_satwa'] . "</td>
                                 <td>" . $row['jumlah'] . "</td>
