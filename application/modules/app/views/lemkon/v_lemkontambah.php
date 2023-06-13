@@ -140,33 +140,47 @@
                 <table class="table table-bordered datatable" id="table-1">
                     <thead>
                         <tr>
-                            <th style="width: auto;">Satwa</th>
+                            <th style="width: 30%;">Satwa</th>
                             <th>Tahun</th>
-                            <th>Jumlah</th>
+                            <th>Total Jumlah</th>
+                            <th>Jantan</th>
+                            <th>Betina</th>
+                            <th>Tidak Diketahui</th>
                             <th>Opsi</th>
                         </tr>
                     </thead>
                     <tbody id="isi">
                         <tr>
-                            <td>
+                            <td style="vertical-align: middle; text-align: center;">
                                 <input type="text" class="form-control" id="satwa">
                                 <span id="errorMessagesatwa" style="color: red;"></span>
                             </td>
-                            <td style="vertical-align:middle;">
+                            <td style="vertical-align: middle;">
                                 <input type="text" class="form-control angka" onkeypress="return inputAngka(event)" id="tahun">
                                 <span id="errorMessagetahun" style="color: red;"></span>
                             </td>
-                            <td style="vertical-align:middle;">
+                            <td style="vertical-align: middle;">
                                 <input type="text" class="form-control angka" onkeypress="return inputAngka(event)" id="jumlah">
                                 <span id="errorMessagejumlah" style="color: red;"></span>
                             </td>
-                            <td style="vertical-align:middle; text-align:center;">
+                            <td style="vertical-align: middle;">
+                                <input type="text" class="form-control angka" onkeypress="return inputAngka(event)" id="jantan">
+                                <span id="errorMessagejantan" style="color: red;"></span>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <input type="text" class="form-control angka" onkeypress="return inputAngka(event)" id="betina">
+                                <span id="errorMessagebetina" style="color: red;"></span>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <input type="text" class="form-control angka" onkeypress="return inputAngka(event)" id="tidaktahu">
+                                <span id="errorMessagetidaktahu" style="color: red;"></span>
+                            </td>
+                            <td style="vertical-align: middle; text-align: center;">
                                 <button type="button" class="btn btn-primary" id="simpan">Simpan</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-
             </div>
         </div>
 
@@ -185,8 +199,6 @@
 
 <script>
     jQuery(document).ready(function($) {
-
-
         // console.log("Before initializing TinyMCE");
         tinymce.init({
             selector: '#satwa',
@@ -235,6 +247,9 @@
             var satwa = tinymce.get('satwa').getContent();
             var tahun = parseInt($("#tahun").val());
             var jumlah = $("#jumlah").val();
+            var betina = $("#betina").val();
+            var jantan = $("#jantan").val();
+            var tidaktahu = $("#tidaktahu").val();
 
 
             var error = validateDetail()
@@ -249,7 +264,7 @@
             satwa = satwa.replace(/<em>/g, '<i>').replace(/<\/em>/g, '</i>'); // Mengganti tag <em> dengan <i>
 
 
-            jQuery('#table-1').DataTable().row.add([satwa, tahun, '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jumlah + '">', '<button type="button" class="btn btn-danger hapus">Hapus</button>']).draw(false);
+            jQuery('#table-1').DataTable().row.add([satwa, tahun, '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jumlah + '">', '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jantan + '">', '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + betina + '">', '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + tidaktahu + '">', '<button type="button" class="btn btn-danger hapus" >Hapus</button>']).draw(false);
 
             // Simpan konten TinyMCE sebelum menghapus
 
@@ -267,7 +282,9 @@
             tinymce.get('satwa').setContent('');
             $("#tahun").val('');
             $("#jumlah").val('');
-
+            $("#jantan").val('');
+            $("#betina").val('');
+            $("#tidaktahu").val('');
 
         });
 
@@ -280,6 +297,8 @@
             var formData = new FormData(document.getElementById('form-data'));
             var formAction = jQuery('#form-data').attr('action');
             var detail = __detaildata();
+            // console.log(detail)
+            // return false
             formData.append('detail', JSON.stringify(detail));
             jQuery.ajax({
                 url: formAction,
@@ -304,11 +323,11 @@
 
 
 
-        
-        
-        
+
+
+
     });
-    
+
     function __detaildata() {
         var $table = jQuery('#table-1');
         var detail = [];
@@ -320,11 +339,17 @@
             var satwa = $row.find('td:eq(0)').html(); // Get the trimmed text content of the first column
             var tahun = $row.find('td:eq(1)').text().trim(); // Get the trimmed text content of the second column
             var jumlah = parseInt($row.find('td:eq(2) input').val()); // Retrieve value from the input field
+            var jantan = parseInt($row.find('td:eq(3) input').val()); // Retrieve value from the input field
+            var betina = parseInt($row.find('td:eq(4) input').val()); // Retrieve value from the input field
+            var tidaktahu = parseInt($row.find('td:eq(5) input').val()); // Retrieve value from the input field
 
             detail.push({
                 satwa: satwa,
                 tahun: tahun,
-                jumlah: isNaN(jumlah) ? 0 : jumlah // Handle NaN values
+                jumlah: isNaN(jumlah) ? 0 : jumlah, // Handle NaN values
+                jantan: isNaN(jantan) ? 0 : jantan, // Handle NaN values
+                betina: isNaN(betina) ? 0 : betina, // Handle NaN values
+                tidaktahu: isNaN(tidaktahu) ? 0 : tidaktahu // Handle NaN values
             });
         });
 
@@ -367,7 +392,7 @@
         });
     });
 
-    function validateForm() {
+    function validateForm(event) {
         let errorCount = 0;
         let nosk = $('#nosk').val();
         let pemilik = $('#pemilik').val();
@@ -410,19 +435,27 @@
         }
 
         if (errorCount !== 0) {
-            preventDefault(); // Menghentikan pengiriman form jika terdapat kesalahan validasi
+            event.preventDefault(); // Menghentikan pengiriman form jika terdapat kesalahan validasi
         }
     }
 
+
+    
     function validateDetail() {
         let errorCount = 0;
         let satwa = tinymce.get('satwa').getContent();
         let tahun = $('#tahun').val();
         let jumlah = $('#jumlah').val();
+        let jantan = $('#jantan').val();
+        let betina = $('#betina').val();
+        let tidaktahu = $('#tidaktahu').val();
 
         $('#errorMessagesatwa').empty();
         $('#errorMessagetahun').empty();
         $('#errorMessagejumlah').empty();
+        $('#errorMessagejantan').empty();
+        $('#errorMessagebetina').empty();
+        $('#errorMessagetidaktahu').empty();
 
         if (satwa.trim() === '') {
             $('#errorMessagesatwa').append('Satwa tidak boleh kosong!<br>');
@@ -435,9 +468,30 @@
         }
 
         if (jumlah.trim() === '') {
-            $('#errorMessagejumlah').append('jumlah tidak boleh kosong!<br>');
+            $('#errorMessagejumlah').append('Jumlah tidak boleh kosong!<br>');
             errorCount += 1;
         }
-        return errorCount
+
+        if (jantan.trim() === '') {
+            $('#errorMessagejantan').append('Jantan tidak boleh kosong!<br>');
+            errorCount += 1;
+        }
+
+        if (betina.trim() === '') {
+            $('#errorMessagebetina').append('Betina tidak boleh kosong!<br>');
+            errorCount += 1;
+        }
+
+        if (tidaktahu.trim() === '') {
+            $('#errorMessagetidaktahu').append('Tidak Tahu tidak boleh kosong!<br>');
+            errorCount += 1;
+        }
+
+        if (parseInt(jantan) + parseInt(betina) + parseInt(tidaktahu) !== parseInt(jumlah)) {
+            $('#errorMessagejumlah').append('Jumlah Total harus sama dengan jumlah (jantan + betina + data tidak diketahui)!<br>');
+            errorCount += 1;
+        }
+
+        return errorCount;
     }
 </script>

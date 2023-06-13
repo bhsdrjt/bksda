@@ -109,7 +109,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group ">
                         <?php
                         $detail = json_decode($data['detail'], true);
                         if (!empty($detail)) {
@@ -120,6 +120,9 @@
                                         <th>Satwa</th>
                                         <th>Tahun</th>
                                         <th>Jumlah</th>
+                                        <th>Jantan</th>
+                                        <th>Betina</th>
+                                        <th>Tidak Diketahui</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -128,6 +131,9 @@
                                             <td><?php echo $d['satwa']; ?></td>
                                             <td><?php echo $d['tahun']; ?></td>
                                             <td><?php echo $d['jumlah']; ?></td>
+                                            <td><?php echo $d['jantan']; ?></td>
+                                            <td><?php echo $d['betina']; ?></td>
+                                            <td><?php echo $d['tidaktahu']; ?></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

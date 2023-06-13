@@ -12,6 +12,9 @@ class M_lemkon extends CI_Model
         $this->db->select('a.*, (SELECT CONCAT(\'[\', GROUP_CONCAT(CONCAT(
             \'{\"satwa\":\"\', REPLACE(b.satwa, \'\\"\', \'\\\\\\\"\'), \'\\",\',
             \'"tahun\":\"\', REPLACE(b.tahun, \'\\"\', \'\\\\\\\"\'), \'\\",\',
+            \'"jantan\":\"\', REPLACE(b.jantan, \'\\"\', \'\\\\\\\"\'), \'\\",\',
+            \'"betina\":\"\', REPLACE(b.betina, \'\\"\', \'\\\\\\\"\'), \'\\",\',
+            \'"tidaktahu\":\"\', REPLACE(b.tidaktahu, \'\\"\', \'\\\\\\\"\'), \'\\",\',
             \'"id_detail\":\"\', REPLACE(b.id, \'\\"\', \'\\\\\\\"\'), \'\\",\',
             \'"jumlah\":\"\', REPLACE(b.jumlah, \'\\"\', \'\\\\\\\"\'), \'"}\'
         )
@@ -87,7 +90,10 @@ class M_lemkon extends CI_Model
                     $newData = array(
                         "satwa" => $data['satwa'],
                         "tahun" => $data['tahun'],
-                        "jumlah" => $data['jumlah']
+                        "jumlah" => $data['jumlah'],
+                        "jantan" => $data['jantan'],
+                        "betina" => $data['betina'],
+                        "tidaktahu" => $data['tidaktahu']
                     );
                     $this->db->where("id", $id_detail);
                     $this->db->update('app_lemkon_detail', $newData);
@@ -96,7 +102,10 @@ class M_lemkon extends CI_Model
                         "id_lembaga" => $id,    
                         "satwa" => $data['satwa'],
                         "tahun" => $data['tahun'],
-                        "jumlah" => $data['jumlah']
+                        "jumlah" => $data['jumlah'],
+                        "jantan" => $data['jantan'],
+                        "betina" => $data['betina'],
+                        "tidaktahu" => $data['tidaktahu']
                     );
                     $this->db->insert('app_lemkon_detail', $newData);
                 }
