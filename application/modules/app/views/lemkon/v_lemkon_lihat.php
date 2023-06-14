@@ -25,12 +25,12 @@
     }
 </style>
 
-<h3>Tambah Satwa </h3>
+<h3>Lihat Lembaga Konservasi </h3>
 <div class="panel panel-primary" data-collapsed="0">
 
     <div class="panel-heading">
         <div class="panel-title">
-            Input
+            Lihat
         </div>
 
         <div class="panel-options">

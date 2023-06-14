@@ -125,7 +125,7 @@
         <button type="submit" class="btn btn-primary btn-s-xs   btn-icon icon-left">
             <i class="fa fa-save"></i> Simpan</button>
         &nbsp
-        <a href="<?php echo base_url('app/penangkar') ?>" class="btn btn-default btn-s-xs   btn-icon icon-left">
+        <a href="<?php echo base_url('app/izinTsl') ?>" class="btn btn-default btn-s-xs   btn-icon icon-left">
             <i class="fa fa-times"></i> Kembali</a>
 
         </form>
@@ -219,10 +219,10 @@
             $('#errorMessagekelas_satwa').append('Kelas Satwa tidak boleh kosong!<br>');
             errorCount += 1;
         }
-        if (jumlah.trim() === '') {
-            $('#errorMessagejumlah').append('Jumlah tidak boleh kosong!<br>');
-            errorCount += 1;
-        }
+        // if (jumlah.trim() === '') {
+        //     $('#errorMessagejumlah').append('Jumlah tidak boleh kosong!<br>');
+        //     errorCount += 1;
+        // }
 
         if (errorCount !== 0) {
             // alert(errorCount)

@@ -17,7 +17,7 @@
 
     <div class="panel-heading">
         <div class="panel-title">
-            Edit Penangkar
+            Lihat
         </div>
 
         <div class="panel-options">

@@ -2400,15 +2400,9 @@ class App extends CI_Controller
     public function getPemilik()
     {
         $jenis = $this->input->get('jenis');
-
-        if ($jenis == 'penangkar') {
-            $result = $this->m_penangkar->getdataPemilik();
-        } elseif ($jenis == 'pengedar') {
-            $result = $this->m_pengedar->getdataPemilik();
-        } else {
-            $result = $this->m_lemkon->getdataPemilik();
-        }
+        $result = $this->m_izinTsl->getdataPemilik($jenis);
         $data = $result->result(); // Mengambil hasil query dalam bentuk array
+        // var_dump($data);exit;
 
         $this->output
             ->set_content_type('application/json')

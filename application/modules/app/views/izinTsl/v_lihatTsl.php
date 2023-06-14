@@ -4,11 +4,11 @@
             <i class="fa fa-file"></i>App</a>
     </li>
     <li class="active">
-        <strong>Data laporan</strong>
+        <strong>Data Laporan </strong>
     </li>
 </ol>
 
-<h3>Data laporan</h3>
+<h3>Data Laporan </h3>
 <div class="row">
     <div class="col-md-12">
 

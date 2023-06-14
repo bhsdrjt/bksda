@@ -30,7 +30,7 @@
 
     <div class="panel-heading">
         <div class="panel-title">
-            Input
+            Edit
         </div>
 
         <div class="panel-options">
@@ -208,7 +208,7 @@
         <a type="button" id="tombol-simpan" class="btn btn-primary btn-s-xs btn-icon icon-left">
             <i class="fa fa-save"></i> Simpan</a>
         &nbsp
-        <a href="<?php echo base_url('app/penangkar') ?>" class="btn btn-default btn-s-xs   btn-icon icon-left">
+        <a href="<?php echo base_url('app/lemkon') ?>" class="btn btn-default btn-s-xs   btn-icon icon-left">
             <i class="fa fa-times"></i> Kembali</a>
 
     </footer>

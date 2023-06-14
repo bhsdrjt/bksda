@@ -115,7 +115,7 @@ if ($jenis == 'pengedar') {
     echo '</tr>';
 } else {
     echo '<tr></th><th colspan = "6">LAPORAN IZIN TSL KESELURUHAN</th></tr>';
-    echo '<tr><th style ="vertical-align: top;" style="width:50px">No</th style ="vertical-align: top;"><th style ="vertical-align: top;" style="width:150px">Jenis Izin TSL</th><th style ="vertical-align: top;" style="width:150px">Pemilik</th><th style ="vertical-align: top;" style="width:250px">Kelas Satwa</th style ="vertical-align: top;"><th style ="vertical-align: top;" style="width:150px">Jumlah Saat Ini</th style ="vertical-align: top;"><th style ="vertical-align: top;" style="width:600px">Keterangan</th></tr>';
+    echo '<tr><th style ="vertical-align: top;" style="width:50px">No</th style ="vertical-align: top;"><th style ="vertical-align: top;" style="width:150px">Jenis Izin TSL</th><th style ="vertical-align: top;" style="width:150px">Pemilik</th><th style ="vertical-align: top;" style="width:150px">Waktu Pendataan</th><th style ="vertical-align: top;" style="width:250px">Kelas Satwa</th style ="vertical-align: top;"><th style ="vertical-align: top;" style="width:150px">Jumlah Saat Ini</th style ="vertical-align: top;"><th style ="vertical-align: top;" style="width:600px">Keterangan</th></tr>';
     $i = 1;
 
     foreach ($data->result_array() as $row) {

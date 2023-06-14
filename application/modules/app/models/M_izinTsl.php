@@ -126,13 +126,13 @@ class M_izinTsl extends CI_Model
             $this->db->query('SET SESSION group_concat_max_len = 1000000');
             $this->db->select('A.*, B.pemilik, B.nosk, B.alamat, B.tglawal_berlaku, B.tglakhir_berlaku');
             $this->db->select('CAST((SELECT CONCAT(\'[\', 
-        GROUP_CONCAT(CONCAT(\'{\"satwa\":\"\', REPLACE(C.satwa, \'\\"\', \'\\\\\\\"\'), \'\\",\', 
-        \'\"tahun\":\"\', REPLACE(C.tahun, \'\\"\', \'\\\\\\\"\'), \'\\",\', 
-        \'\"jantan\":\"\', IFNULL(REPLACE(C.jantan, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\', 
-        \'\"betina\":\"\', IFNULL(REPLACE(C.betina, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\', 
-        \'\"tidaktahu\":\"\', IFNULL(REPLACE(C.tidaktahu, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\', 
-        \'\"jumlah\":\"\', REPLACE(C.jumlah, \'\\"\', \'\\\\\\\"\'), \'\"}\') ORDER BY C.id ASC SEPARATOR \',\'), \']\') 
-        FROM app_lemkon_detail C WHERE C.id_lembaga = B.id) AS CHAR) AS detail', FALSE);
+            GROUP_CONCAT(CONCAT(\'{\"satwa\":\"\', REPLACE(C.satwa, \'\\"\', \'\\\\\\\"\'), \'\\",\', 
+            \'\"tahun\":\"\', REPLACE(C.tahun, \'\\"\', \'\\\\\\\"\'), \'\\",\', 
+            \'\"jantan\":\"\', IFNULL(REPLACE(C.jantan, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\', 
+            \'\"betina\":\"\', IFNULL(REPLACE(C.betina, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\', 
+            \'\"tidaktahu\":\"\', IFNULL(REPLACE(C.tidaktahu, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\', 
+            \'\"jumlah\":\"\', REPLACE(C.jumlah, \'\\"\', \'\\\\\\\"\'), \'\"}\') ORDER BY C.id ASC SEPARATOR \',\'), \']\') 
+            FROM app_lemkon_detail C WHERE C.id_lembaga = B.id) AS CHAR) AS detail', FALSE);
             $this->db->from('app_izin_tsl A');
             $this->db->join('app_lemkon B', 'B.id = A.id_reff');
             $this->db->where('A.jenis', 'lembaga konservasi');
@@ -157,5 +157,20 @@ class M_izinTsl extends CI_Model
             $this->db->join('app_lemkon D', 'D.id = A.id_reff', 'left');
             return $this->db->get();
         }
+    }
+
+    public function getdataPemilik($jenis){
+        $this->db->select('COALESCE(pt.pemilik, pd.pemilik, lk.pemilik) AS pemilik, COALESCE(pt.id, pd.id, lk.id) AS id, ');
+        $this->db->join('app_penangkar pt', "it.jenis = 'penangkar' AND pt.id = it.id_reff", 'left');
+        $this->db->join('app_pengedar pd', "it.jenis = 'pengedar' AND pd.id = it.id_reff", 'left');
+        $this->db->join('app_lemkon lk', "it.jenis = 'lembaga konservasi' AND lk.id = it.id_reff", 'left');
+        $this->db->where('it.jenis', $jenis);
+        $this->db->from('app_izin_tsl it');
+        $query = $this->db->get();
+        // $lastQuery = $this->db->last_query();
+
+        // echo $lastQuery;
+
+        return $query;
     }
 }

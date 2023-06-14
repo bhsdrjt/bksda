@@ -12,12 +12,12 @@
     </li>
 </ol>
 
-<h3>Lihat Data Pengedar </h3>
+<h3>Lihat Pengedar </h3>
 <div class="panel panel-primary" data-collapsed="0">
 
     <div class="panel-heading">
         <div class="panel-title">
-            Edit Pengedar
+            Lihat
         </div>
 
         <div class="panel-options">
