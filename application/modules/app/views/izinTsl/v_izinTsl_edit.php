@@ -38,7 +38,7 @@
 
     <div class="panel-heading">
         <div class="panel-title">
-            Input
+            Edit
         </div>
 
         <div class="panel-options">

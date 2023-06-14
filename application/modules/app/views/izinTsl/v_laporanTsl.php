@@ -25,7 +25,7 @@ if ($jenis == 'pengedar') {
         $tglakhir = strftime('%d %B %Y', strtotime($datetime_tglakhir->format('Y-m-d')));
 
         echo '<tr><td style ="vertical-align: top;">' . $i . '</td >';
-        echo '<td style ="vertical-align: top;">' . strtoupper($row['pemilik']) . '</td>';
+        echo '<td style ="vertical-align: top;">' . ucfirst($row['pemilik']) . '</td>';
         echo '<td style ="vertical-align: top;">' . $pendataan . '</td>';
         echo '<td style ="vertical-align: top;">' . $row['kelas_satwa'] . '</td>';
         echo '<td style ="vertical-align: top;">' . $row['jumlah'] . '</td>';
@@ -52,7 +52,7 @@ if ($jenis == 'pengedar') {
         $jumlahArray = count($detail);
         echo '<tr>';
         echo '<td style="vertical-align: top;" rowspan="' . $jumlahArray . '">' . $i . '</td>';
-        echo '<td style="vertical-align: top;" rowspan="' . $jumlahArray . '">' . strtoupper($row['pemilik']) . '</td>';
+        echo '<td style="vertical-align: top;" rowspan="' . $jumlahArray . '">' . ucfirst($row['pemilik']) . '</td>';
         echo '<td style="vertical-align: top;" rowspan="' . $jumlahArray . '">' . $pendataan . '</td>';
         echo '<td style="vertical-align: top;" rowspan="' . $jumlahArray . '">' . $row['kelas_satwa'] . '</td>';
         echo '<td style="vertical-align: top;" rowspan="' . $jumlahArray . '">' . $row['jumlah'] . '</td>';
@@ -88,7 +88,7 @@ if ($jenis == 'pengedar') {
         $jumlahArray = count($detail);
         echo '<tr>';
         echo '<td style="vertical-align: top;" rowspan="' . $jumlahArray . '">' . $i . '</td>';
-        echo '<td style="vertical-align: top;" rowspan="' . $jumlahArray . '">' . strtoupper($row['pemilik']) . '</td>';
+        echo '<td style="vertical-align: top;" rowspan="' . $jumlahArray . '">' . ucfirst($row['pemilik']) . '</td>';
         echo '<td style="vertical-align: top;" rowspan="' . $jumlahArray . '">' . $pendataan . '</td>';
         echo '<td style="vertical-align: top;" rowspan="' . $jumlahArray . '">' . $row['kelas_satwa'] . '</td>';
         echo '<td style="vertical-align: top;" rowspan="' . $jumlahArray . '">' . $row['jumlah'] . '</td>';
@@ -122,8 +122,8 @@ if ($jenis == 'pengedar') {
         $datetime_pendataan = new DateTime($row['waktu_pendataan']);
         $pendataan = strftime('%d %B %Y', strtotime($datetime_pendataan->format('Y-m-d')));
         echo '<tr><td style ="vertical-align: top;">' . $i . '</td >';
-        echo '<td style ="vertical-align: top;">' . strtoupper($row['jenis']) . '</td>';
-        echo '<td style ="vertical-align: top;">' . strtoupper($row['pemilik']) . '</td>';
+        echo '<td style ="vertical-align: top;">' . ucfirst($row['jenis']) . '</td>';
+        echo '<td style ="vertical-align: top;">' . ucfirst($row['pemilik']) . '</td>';
         echo '<td style ="vertical-align: top;">' . $pendataan . '</td>';
         echo '<td style ="vertical-align: top;">' . $row['kelas_satwa'] . '</td>';
         echo '<td style ="vertical-align: top;">' . $row['jumlah'] . '</td>';
