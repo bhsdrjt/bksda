@@ -12,9 +12,9 @@ class M_lemkon extends CI_Model
         $this->db->select('a.*, (SELECT CONCAT(\'[\', GROUP_CONCAT(CONCAT(
             \'{\"satwa\":\"\', REPLACE(b.satwa, \'\\"\', \'\\\\\\\"\'), \'\\",\',
             \'"tahun\":\"\', REPLACE(b.tahun, \'\\"\', \'\\\\\\\"\'), \'\\",\',
-            \'"jantan\":\"\', REPLACE(b.jantan, \'\\"\', \'\\\\\\\"\'), \'\\",\',
-            \'"betina\":\"\', REPLACE(b.betina, \'\\"\', \'\\\\\\\"\'), \'\\",\',
-            \'"tidaktahu\":\"\', REPLACE(b.tidaktahu, \'\\"\', \'\\\\\\\"\'), \'\\",\',
+            \'"jantan\":\"\', IFNULL(REPLACE(b.jantan, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\',
+            \'"betina\":\"\', IFNULL(REPLACE(b.betina, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\',
+            \'"tidaktahu\":\"\', IFNULL(REPLACE(b.tidaktahu, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\',
             \'"id_detail\":\"\', REPLACE(b.id, \'\\"\', \'\\\\\\\"\'), \'\\",\',
             \'"jumlah\":\"\', REPLACE(b.jumlah, \'\\"\', \'\\\\\\\"\'), \'"}\'
         )
@@ -23,6 +23,7 @@ class M_lemkon extends CI_Model
         ), \']\')
         FROM app_lemkon_detail b WHERE b.id_lembaga = a.id) as detail', FALSE);
         $this->db->from('app_lemkon a');
+
         $this->db->where('a.id', $id);
         return $this->db->get();
     }
@@ -86,7 +87,7 @@ class M_lemkon extends CI_Model
 
             foreach ($arrayDetail as $data) {
                 $id_detail = $data['id_detail'];
-                if ($id_detail != null){
+                if ($id_detail != null) {
                     $newData = array(
                         "satwa" => $data['satwa'],
                         "tahun" => $data['tahun'],
@@ -97,9 +98,9 @@ class M_lemkon extends CI_Model
                     );
                     $this->db->where("id", $id_detail);
                     $this->db->update('app_lemkon_detail', $newData);
-                }else{
+                } else {
                     $newData = array(
-                        "id_lembaga" => $id,    
+                        "id_lembaga" => $id,
                         "satwa" => $data['satwa'],
                         "tahun" => $data['tahun'],
                         "jumlah" => $data['jumlah'],
@@ -149,6 +150,5 @@ class M_lemkon extends CI_Model
             $this->db->trans_rollback();
             return array('status' => false, 'message' => 'Terjadi kesalahan saat menambahkan data. ' . $e->getMessage());
         }
-        
     }
 }

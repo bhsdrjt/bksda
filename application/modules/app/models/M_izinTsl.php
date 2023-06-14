@@ -125,10 +125,18 @@ class M_izinTsl extends CI_Model
         } else if ($jenis == 'lembaga konservasi') {
             $this->db->query('SET SESSION group_concat_max_len = 1000000');
             $this->db->select('A.*, B.pemilik, B.nosk, B.alamat, B.tglawal_berlaku, B.tglakhir_berlaku');
-            $this->db->select('CAST((SELECT CONCAT(\'[\', GROUP_CONCAT(CONCAT(\'{\"satwa\":\"\', REPLACE(C.satwa, \'\\"\', \'\\\\\\\"\'), \'\\",\', \'\"tahun\":\"\', REPLACE(C.tahun, \'\\"\', \'\\\\\\\"\'), \'\\",\', \'\"jumlah\":\"\', REPLACE(C.jumlah, \'\\"\', \'\\\\\\\"\'), \'\"}\') ORDER BY C.id ASC SEPARATOR \',\'), \']\') FROM app_lemkon_detail C WHERE C.id_lembaga = B.id) AS CHAR) AS detail', FALSE);
+            $this->db->select('CAST((SELECT CONCAT(\'[\', 
+        GROUP_CONCAT(CONCAT(\'{\"satwa\":\"\', REPLACE(C.satwa, \'\\"\', \'\\\\\\\"\'), \'\\",\', 
+        \'\"tahun\":\"\', REPLACE(C.tahun, \'\\"\', \'\\\\\\\"\'), \'\\",\', 
+        \'\"jantan\":\"\', IFNULL(REPLACE(C.jantan, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\', 
+        \'\"betina\":\"\', IFNULL(REPLACE(C.betina, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\', 
+        \'\"tidaktahu\":\"\', IFNULL(REPLACE(C.tidaktahu, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\', 
+        \'\"jumlah\":\"\', REPLACE(C.jumlah, \'\\"\', \'\\\\\\\"\'), \'\"}\') ORDER BY C.id ASC SEPARATOR \',\'), \']\') 
+        FROM app_lemkon_detail C WHERE C.id_lembaga = B.id) AS CHAR) AS detail', FALSE);
             $this->db->from('app_izin_tsl A');
             $this->db->join('app_lemkon B', 'B.id = A.id_reff');
             $this->db->where('A.jenis', 'lembaga konservasi');
+
             if ($id_reff) {
                 $this->db->where('A.id_reff', $id_reff);
             }

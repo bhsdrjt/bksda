@@ -142,10 +142,10 @@
                         <tr>
                             <th style="width: 30%;">Satwa</th>
                             <th>Tahun</th>
-                            <th>Total Jumlah</th>
                             <th>Jantan</th>
                             <th>Betina</th>
                             <th>Tidak Diketahui</th>
+                            <th>Total Jumlah</th>
                             <th>Opsi</th>
                         </tr>
                     </thead>
@@ -160,10 +160,6 @@
                                 <span id="errorMessagetahun" style="color: red;"></span>
                             </td>
                             <td style="vertical-align: middle;">
-                                <input type="text" class="form-control angka" onkeypress="return inputAngka(event)" id="jumlah">
-                                <span id="errorMessagejumlah" style="color: red;"></span>
-                            </td>
-                            <td style="vertical-align: middle;">
                                 <input type="text" class="form-control angka" onkeypress="return inputAngka(event)" id="jantan">
                                 <span id="errorMessagejantan" style="color: red;"></span>
                             </td>
@@ -174,6 +170,10 @@
                             <td style="vertical-align: middle;">
                                 <input type="text" class="form-control angka" onkeypress="return inputAngka(event)" id="tidaktahu">
                                 <span id="errorMessagetidaktahu" style="color: red;"></span>
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <input type="text" class="form-control angka" onkeypress="return inputAngka(event)" id="jumlah">
+                                <span id="errorMessagejumlah" style="color: red;"></span>
                             </td>
                             <td style="vertical-align: middle; text-align: center;">
                                 <button type="button" class="btn btn-primary" id="simpan">Simpan</button>
@@ -264,7 +264,7 @@
             satwa = satwa.replace(/<em>/g, '<i>').replace(/<\/em>/g, '</i>'); // Mengganti tag <em> dengan <i>
 
 
-            jQuery('#table-1').DataTable().row.add([satwa, tahun, '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jumlah + '">', '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jantan + '">', '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + betina + '">', '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + tidaktahu + '">', '<button type="button" class="btn btn-danger hapus" >Hapus</button>']).draw(false);
+            jQuery('#table-1').DataTable().row.add([satwa, tahun,  '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jantan + '">', '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + betina + '">', '<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + tidaktahu + '">','<input type="text" class="form-control angka" onkeypress="return inputAngka(event)" value="' + jumlah + '">', '<button type="button" class="btn btn-danger hapus" >Hapus</button>']).draw(false);
 
             // Simpan konten TinyMCE sebelum menghapus
 
@@ -338,10 +338,10 @@
 
             var satwa = $row.find('td:eq(0)').html(); // Get the trimmed text content of the first column
             var tahun = $row.find('td:eq(1)').text().trim(); // Get the trimmed text content of the second column
-            var jumlah = parseInt($row.find('td:eq(2) input').val()); // Retrieve value from the input field
-            var jantan = parseInt($row.find('td:eq(3) input').val()); // Retrieve value from the input field
-            var betina = parseInt($row.find('td:eq(4) input').val()); // Retrieve value from the input field
-            var tidaktahu = parseInt($row.find('td:eq(5) input').val()); // Retrieve value from the input field
+            var jantan = parseInt($row.find('td:eq(2) input').val()); // Retrieve value from the input field
+            var betina = parseInt($row.find('td:eq(3) input').val()); // Retrieve value from the input field
+            var tidaktahu = parseInt($row.find('td:eq(4) input').val()); // Retrieve value from the input field
+            var jumlah = parseInt($row.find('td:eq(5) input').val()); // Retrieve value from the input field
 
             detail.push({
                 satwa: satwa,
