@@ -111,12 +111,14 @@
                 <div class="col-md-6">
                     <div class="form-group ">
                         <?php
+                        $no =1;
                         $detail = json_decode($data['detail'], true);
                         if (!empty($detail)) {
                         ?>
                             <table class="table" style="width: 50%;">
                                 <thead>
                                     <tr>
+                                        <th>No.</th>
                                         <th>Satwa</th>
                                         <th>Tahun</th>
                                         <th>Jumlah</th>
@@ -128,6 +130,7 @@
                                 <tbody>
                                     <?php foreach ($detail as $d) { ?>
                                         <tr>
+                                            <td><?php echo $no ?></td>
                                             <td><?php echo $d['satwa']; ?></td>
                                             <td><?php echo $d['tahun']; ?></td>
                                             <td><?php echo $d['jumlah']; ?></td>
@@ -135,7 +138,7 @@
                                             <td><?php echo $d['betina']; ?></td>
                                             <td><?php echo $d['tidaktahu']; ?></td>
                                         </tr>
-                                    <?php } ?>
+                                    <?php  $no++; } ?>
                                 </tbody>
                             </table>
                         <?php } ?>
