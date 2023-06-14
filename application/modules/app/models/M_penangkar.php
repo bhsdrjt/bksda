@@ -16,6 +16,7 @@ class M_penangkar extends CI_Model
 
     function lihatdatasatu($id)
     {
+        $this->db->query("SET SESSION group_concat_max_len = 1000000");
         $this->db->select('a.*, (SELECT CONCAT(\'[\', GROUP_CONCAT(CONCAT(
             \'{\"satwa\":\"\', REPLACE(b.satwa, \'\\"\', \'\\\\\\\"\'), \'\\",\',
             \'"id_detail\":\"\', REPLACE(b.id, \'\\"\', \'\\\\\\\"\'), \'\\",\',

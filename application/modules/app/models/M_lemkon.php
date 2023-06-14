@@ -9,6 +9,7 @@ class M_lemkon extends CI_Model
 
     function lihatdatasatu($id)
     {
+        $this->db->query("SET SESSION group_concat_max_len = 1000000");
         $this->db->select('a.*, (SELECT CONCAT(\'[\', GROUP_CONCAT(CONCAT(
             \'{\"satwa\":\"\', REPLACE(b.satwa, \'\\"\', \'\\\\\\\"\'), \'\\",\',
             \'"tahun\":\"\', REPLACE(b.tahun, \'\\"\', \'\\\\\\\"\'), \'\\",\',
@@ -17,10 +18,10 @@ class M_lemkon extends CI_Model
             \'"tidaktahu\":\"\', IFNULL(REPLACE(b.tidaktahu, \'\\"\', \'\\\\\\\"\'), \'0\'), \'\\",\',
             \'"id_detail\":\"\', REPLACE(b.id, \'\\"\', \'\\\\\\\"\'), \'\\",\',
             \'"jumlah\":\"\', REPLACE(b.jumlah, \'\\"\', \'\\\\\\\"\'), \'"}\'
-        )
-        ORDER BY b.id ASC
-        SEPARATOR \',\'
-        ), \']\')
+            )
+            ORDER BY b.id ASC
+            SEPARATOR \',\'
+            ), \']\')
         FROM app_lemkon_detail b WHERE b.id_lembaga = a.id) as detail', FALSE);
         $this->db->from('app_lemkon a');
 

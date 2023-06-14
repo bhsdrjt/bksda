@@ -2282,6 +2282,7 @@ class App extends CI_Controller
         } else {
             $id = $this->input->get("id");
             $exec = $this->m_lemkon->lihatdatasatu($id);
+            // var_dump($exec->result());exit;
             if ($exec->num_rows() > 0) {
                 $variabel['data'] = $exec->row_array();
                 $this->layout->render('lemkon/v_lemkon_edit', $variabel);
