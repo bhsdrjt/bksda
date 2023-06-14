@@ -159,18 +159,16 @@ class M_izinTsl extends CI_Model
         }
     }
 
-    public function getdataPemilik($jenis){
+    public function getdataPemilik($jenis)
+    {
         $this->db->select('COALESCE(pt.pemilik, pd.pemilik, lk.pemilik) AS pemilik, COALESCE(pt.id, pd.id, lk.id) AS id, ');
         $this->db->join('app_penangkar pt', "it.jenis = 'penangkar' AND pt.id = it.id_reff", 'left');
         $this->db->join('app_pengedar pd', "it.jenis = 'pengedar' AND pd.id = it.id_reff", 'left');
         $this->db->join('app_lemkon lk', "it.jenis = 'lembaga konservasi' AND lk.id = it.id_reff", 'left');
         $this->db->where('it.jenis', $jenis);
         $this->db->from('app_izin_tsl it');
+        $this->db->group_by('pemilik, id'); // Menambahkan pengelompokan berdasarkan pemilik dan id
         $query = $this->db->get();
-        // $lastQuery = $this->db->last_query();
-
-        // echo $lastQuery;
-
         return $query;
     }
 }
