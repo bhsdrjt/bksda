@@ -58,17 +58,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-4 control-label">Masa berlaku</label>
+                        <label class="col-lg-4 control-label">Masa Berlaku</label>
                         <div class="col-lg-8">
-                            <div class="input-group">
-                                <!-- <span class="input-group-addon">Tgl Awal</span> -->
-                                <p class="form-control-static"> : <b><?php echo date("d-m-Y", strtotime($data['tglawal_berlaku'])); ?></b> Sampai <b><?php echo date("d-m-Y", strtotime($data['tglakhir_berlaku'])); ?></b></p>
-                            </div>
-                            <!-- <br>
-                            <div class="input-group">
-                                <span class="input-group-addon">Tgl Berakhir</span>
-                                <p class="form-control-static"> : </p>
-                            </div> -->
+                            <p class="form-control-static"> : <b><?php echo tgl_indo($data['tglawal_berlaku']) ?></b> Sampai <b><?php echo tgl_indo($data['tglakhir_berlaku']) ?></b></p>
                         </div>
                     </div>
 

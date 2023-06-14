@@ -71,7 +71,7 @@
                     <div class="form-group">
                         <label class="col-lg-4 control-label">Masa Berlaku</label>
                         <div class="col-lg-8">
-                            <p class="form-control-static"> : <b><?php echo tgl_indo($data['tglawal_berlaku']) ?></b> - <b><?php echo tgl_indo($data['tglakhir_berlaku']) ?></b></p>
+                            <p class="form-control-static"> : <b><?php echo tgl_indo($data['tglawal_berlaku']) ?></b> Sampai <b><?php echo tgl_indo($data['tglakhir_berlaku']) ?></b></p>
                         </div>
                     </div>
                 </div>
